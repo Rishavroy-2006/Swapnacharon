@@ -113,6 +113,8 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #777;
       }
+
+      
     </style>
   </head>
   <body class="antialiased">
@@ -263,63 +265,14 @@
           </p>
         </div>
 
-        <!-- Portfolio Filter -->
-        <div class="flex justify-center mb-12" data-aos="fade-up">
-          <div class="inline-flex rounded-md shadow-sm" role="group">
-            <button
-              type="button"
-              class="filter-btn px-4 py-2 text-sm font-medium rounded-l-lg border border-gray-600 bg-gray-800 text-white"
-              data-filter="all"
-            >
-              All
-            </button>
-            <button
-              type="button"
-              class="filter-btn px-4 py-2 text-sm font-medium border-t border-b border-gray-600 bg-gray-800 text-gray-300"
-              data-filter="wedding"
-            >
-              Weddings
-            </button>
-            <button
-              type="button"
-              class="filter-btn px-4 py-2 text-sm font-medium border border-gray-600 bg-gray-800 text-gray-300"
-              data-filter="portrait"
-            >
-              Portraits
-            </button>
-            <button
-              type="button"
-              class="filter-btn px-4 py-2 text-sm font-medium border-t border-b border-gray-600 bg-gray-800 text-gray-300"
-              data-filter="commercial"
-            >
-              Commercial
-            </button>
-            <button
-              type="button"
-              class="filter-btn px-4 py-2 text-sm font-medium rounded-r-lg border border-gray-600 bg-gray-800 text-gray-300"
-              data-filter="events"
-            >
-              Events
-            </button>
-          </div>
-        </div>
-
-        <!-- Portfolio Grid -->
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          id="portfolio-grid"
-        >
+      
           <!-- Portfolio items will be dynamically loaded here -->
-        </div>
+           <script src="https://elfsightcdn.com/platform.js" async></script>
+      <div class="elfsight-app-40c93da7-e341-4480-8772-6ce406cb7d32" data-elfsight-app-lazy></div>
+    </div>
+    
 
-        <div class="text-center mt-12" data-aos="fade-up">
-          <button
-            id="load-more"
-            class="px-6 py-3 border border-gray-600 text-white font-medium rounded-md hover:bg-gray-800 transition duration-300"
-          >
-            Load More
-          </button>
-        </div>
+       
       </div>
     </section>
 
@@ -1093,43 +1046,7 @@
     });
   });
 
-  /* ---------- Portfolio filtering ---------- */
-  const portfolioGrid = document.getElementById('portfolio-grid');
-  const filterBtns    = document.querySelectorAll('.filter-btn');
-  const portfolioItems = [
-    {title:'Traditional Bengali Wedding',client:'Anita & Raj',year:'2024',category:'wedding',image:'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop'},
-    {title:'Corporate Headshots',client:'Tech Startup',year:'2024',category:'portrait',image:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=face'},
-    {title:'Product Launch Event',client:'Fashion Brand',year:'2024',category:'events',image:'https://images.unsplash.com/photo-1511578314322-379afb476865?w=400&h=300&fit=crop'},
-    {title:'Restaurant Food Shoot',client:'Bengali Cuisine',year:'2023',category:'commercial',image:'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=300&fit=crop'},
-    {title:'Pre-Wedding Shoot',client:'Priya & Arjun',year:'2024',category:'wedding',image:'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=400&h=300&fit=crop'},
-    {title:'Family Portrait',client:'The Sharma Family',year:'2023',category:'portrait',image:'https://images.unsplash.com/photo-1561501900-3701fa6a0864?w=400&h=300&fit=crop'}
-  ];
-
-  function renderPortfolio(filter='all'){
-    portfolioGrid.innerHTML='';
-    const list = filter==='all'? portfolioItems : portfolioItems.filter(p=>p.category===filter);
-    list.forEach((p,i)=>{
-      portfolioGrid.insertAdjacentHTML('beforeend',`
-        <div class="portfolio-item bg-gray-800 rounded-lg overflow-hidden shadow-xl" data-aos="fade-up">
-          <div class="relative group">
-            <img src="${p.image}" alt="${p.title}" class="w-full h-64 object-cover">
-            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-              <span class="px-4 py-2 bg-white text-black font-medium rounded-md">View Project</span>
-            </div>
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-medium text-white">${p.title}</h3>
-            <p class="text-gray-400 text-sm">${p.client} • ${p.year}</p>
-          </div>
-        </div>`);
-    });
-  }
-  filterBtns.forEach(btn=>btn.addEventListener('click',()=>{
-    filterBtns.forEach(b=>b.classList.remove('bg-gray-700','text-white'));
-    btn.classList.add('bg-gray-700','text-white');
-    renderPortfolio(btn.dataset.filter);
-  }));
-  renderPortfolio();
+  
 
   /* ---------- Contact form ---------- */
   document.getElementById('contact-form').addEventListener('submit',e=>{
@@ -1150,5 +1067,6 @@
     e.target.reset();
   });
 </script>
+
   </body>
 </html>
