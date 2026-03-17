@@ -87,13 +87,19 @@
         width: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #fff5f5;
+        background: transparent; /* Hides the long white bar completely */
       }
       ::-webkit-scrollbar-thumb {
-        background: #b91c1c;
+        background: rgba(185, 28, 28, 0.25); /* Makes the wheel subtle and semi-transparent */
+        border-radius: 10px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #991b1b;
+        background: rgba(185, 28, 28, 0.9); /* Becomes solid red when hovered/used */
+      }
+      /* Support for Firefox */
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(185, 28, 28, 0.4) transparent;
       }
 
       .faq-content {
@@ -175,48 +181,36 @@
         .video-thumb-container { width: 20rem; /* 320px */ }
       }
 
-      /* Cinematic Preloader CSS */
-      .focus-in-expand {
-        animation: focus-in-expand 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards;
-      }
-      @keyframes focus-in-expand {
-        0% {
-          letter-spacing: -0.5em;
-          filter: blur(12px);
-          opacity: 0;
-        }
-        100% {
-          letter-spacing: 0.1em;
-          filter: blur(0px);
-          opacity: 1;
-        }
-      }
-      .preloader-transition {
-        transition: opacity 1s ease-in-out, transform 1s ease-in-out, visibility 1s;
+      /* Techy Preloader CSS */
+      @keyframes loadingBar {
+        0% { width: 0%; left: 0%; }
+        50% { width: 100%; left: 0%; }
+        100% { width: 0%; left: 100%; }
       }
       .preloader-hidden {
         opacity: 0;
         visibility: hidden;
-        transform: scale(1.05); /* Slight zoom-in effect during fade */
       }
     </style>
   </head>
   <body class="antialiased">
     
-    <!-- Cinematic Preloader -->
-    <div id="preloader" class="fixed inset-0 z-[9999] bg-brand-dark flex flex-col items-center justify-center preloader-transition">
-      <div class="relative flex flex-col items-center">
-        <!-- Cinematic Name Reveal -->
-        <h2 class="text-3xl md:text-5xl font-bold font-serif text-white uppercase focus-in-expand">
-          Swapnacharon
-        </h2>
-        <p class="mt-3 text-brand-accent font-medium tracking-[0.4em] uppercase text-xs animate-pulse opacity-80">
-          Photography & Films
-        </p>
+    <!-- Techy Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[9999] bg-brand-dark flex flex-col items-center justify-center transition-all duration-700 ease-in-out">
+      <div class="relative w-24 h-24">
+        <!-- Outer Forward Spinning Ring -->
+        <div class="absolute inset-0 border-t-2 border-brand-accent rounded-full animate-spin"></div>
+        <!-- Inner Reverse Spinning Glowing Ring -->
+        <div class="absolute inset-2 border-r-2 border-white rounded-full animate-spin shadow-[0_0_15px_rgba(255,255,255,0.2)]" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
+        <!-- Pulsing Camera Icon -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white w-6 h-6 animate-pulse"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+        </div>
       </div>
-      <!-- Sleek Loading Bar -->
-      <div class="w-48 md:w-64 h-[2px] bg-white/10 mt-10 relative overflow-hidden rounded-full">
-        <div id="preloader-bar" class="absolute top-0 left-0 h-full bg-brand-accent w-0 transition-all duration-300 ease-out"></div>
+      <div class="mt-8 text-white font-serif tracking-[0.3em] uppercase text-sm animate-pulse">Initializing</div>
+      <!-- Sweeping Tech Bar -->
+      <div class="w-48 h-px bg-gray-800 mt-4 relative overflow-hidden">
+        <div class="absolute top-0 left-0 h-full bg-brand-accent animate-[loadingBar_2s_ease-in-out_infinite]"></div>
       </div>
     </div>
 
@@ -823,18 +817,8 @@
 
         // Preloader transition logic
         const preloader = document.getElementById('preloader');
-        const preloaderBar = document.getElementById('preloader-bar');
-        
         if (preloader) {
-          // Fake progress simulation for the aesthetic loading bar
-          let progress = 0;
-          const progressInterval = setInterval(() => {
-            progress += Math.random() * 15;
-            if (progress > 90) progress = 90;
-            if (preloaderBar) preloaderBar.style.width = progress + '%';
-          }, 300);
-
-          // Wait for first 5 hero images to load, or timeout after 3.5s to ensure it doesn't hang
+          // Wait for first 5 hero images to load, or timeout after 3s to ensure it doesn't hang
           const heroImgs = Array.from(document.querySelectorAll('#dynamic-hero-marquee img')).slice(0, 5);
           const loadPromises = heroImgs.map(img => new Promise(resolve => {
              if(img.complete) resolve();
@@ -846,17 +830,13 @@
           
           Promise.race([
             Promise.all(loadPromises),
-            new Promise(res => setTimeout(res, 3500)) // Max 3.5 seconds safety timeout
+            new Promise(res => setTimeout(res, 3000)) // Max 3 seconds safety timeout
           ]).then(() => {
-            // Loading complete. Snap bar to 100%
-            clearInterval(progressInterval);
-            if (preloaderBar) preloaderBar.style.width = '100%';
-            
-            // Slight delay to let the user see the completed bar, then smoothly fade out
+            // Slight delay for smoothness
             setTimeout(() => {
               preloader.classList.add('preloader-hidden');
-              setTimeout(() => preloader.remove(), 1000); // Remove from DOM after transition
-            }, 600);
+              setTimeout(() => preloader.remove(), 700); // Remove from DOM after fade out
+            }, 500);
           });
         }
       }
