@@ -304,6 +304,7 @@
 
           <div class="flex space-x-6 w-1/3 justify-start items-center">
             <a href="#videos" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Films</a>
+            <a href="#stories" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Stories</a>
             <a href="#packages" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Packages</a>
             <a href="#contact" class="nav-link text-xs font-medium uppercase tracking-[0.15em] text-royal-gold">Contact</a>
           </div>
@@ -446,7 +447,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16" data-aos="fade-up">
           <p class="text-royal-gold font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">The Royal Gallery</p>
-          <h2 class="text-4xl md:text-5xl font-bold font-playfair text-royal-ivory">A Visual Masterpiece</h2>
+          <h2 class="text-4xl md:text-5xl font-bold font-playfair text-royal-ivory">A Visual <span class="italic text-royal-gold">Masterpiece</span></h2>
           <div class="flex justify-center mt-6">
             <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 10H20M40 10H60M30 0L20 10L30 20L40 10L30 0Z" fill="#D4AF37"/>
@@ -475,7 +476,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-16" data-aos="fade-up">
           <p class="text-royal-gold font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">Cinematography</p>
-          <h2 class="text-4xl md:text-5xl font-bold font-playfair text-royal-ivory">Epic Wedding Films</h2>
+          <h2 class="text-4xl md:text-5xl font-bold font-playfair text-royal-ivory">Epic Wedding <span class="italic text-royal-gold">Films</span></h2>
           <div class="flex justify-center mt-6">
             <div class="w-24 h-px bg-royal-gold"></div>
           </div>
@@ -491,6 +492,27 @@
       </div>
     </section>
 
+    <!-- Featured Stories Section -->
+    <section id="stories" class="py-32 bg-mandala border-b border-royal-gold/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16" data-aos="fade-up">
+          <div>
+            <p class="text-royal-maroon font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">Real Weddings</p>
+            <h2 class="text-4xl md:text-5xl font-bold font-playfair text-royal-dark">Featured <span class="italic text-royal-maroon">Stories</span></h2>
+            <div class="w-24 h-px bg-royal-gold mt-6"></div>
+          </div>
+          <a href="#contact" class="hidden md:inline-block pb-1 border-b border-royal-gold text-royal-maroon text-xs font-bold tracking-widest uppercase hover:text-royal-gold transition duration-300">
+            Book Your Story
+          </a>
+        </div>
+
+        <!-- DYNAMIC CONTENT: Stories -->
+        <div id="dynamic-stories" class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            <!-- JS will inject story items here -->
+        </div>
+      </div>
+    </section>
+
     <!-- Premium Packages Section (Crucial) -->
     <section id="packages" class="py-32 bg-royal-dark relative overflow-hidden">
       <!-- Decorative Background Orbs -->
@@ -500,7 +522,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-20" data-aos="fade-up">
           <p class="text-royal-gold font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">Investment</p>
-          <h2 class="text-4xl md:text-5xl font-bold font-playfair text-white">Premium Wedding Packages</h2>
+          <h2 class="text-4xl md:text-5xl font-bold font-playfair text-white">Premium Wedding <span class="italic text-royal-gold">Packages</span></h2>
           <div class="flex justify-center mt-6 mb-6">
             <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 10H20M40 10H60M30 0L20 10L30 20L40 10L30 0Z" fill="#D4AF37"/>
@@ -600,7 +622,7 @@
           
           <div class="lg:col-span-2" data-aos="fade-right">
             <p class="text-royal-maroon font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">Connect</p>
-            <h2 class="text-4xl md:text-5xl font-bold font-playfair mb-6">Begin Your <br/>Royal Journey.</h2>
+            <h2 class="text-4xl md:text-5xl font-bold font-playfair mb-6">Begin Your <br/>Royal <span class="italic text-royal-maroon">Journey.</span></h2>
             <div class="w-16 h-1 bg-royal-gold mb-10"></div>
             <p class="text-gray-700 font-light mb-12 leading-relaxed text-lg">
               We are currently accepting limited commissions for the 2025-2026 wedding seasons to ensure the highest quality of artistry. Let's discuss your vision.
@@ -740,6 +762,10 @@
         { Category: "Portfolio", ImageLink: "1_X07rFVuU71M2upvAbTgXoTu_AD-Xlvq", RedirectLink: "#" },
         { Category: "Portfolio", ImageLink: "1CHHq8obgA2aZLyTApuqdVa7j0FT_PM-g", RedirectLink: "#" },
         { Category: "Portfolio", ImageLink: "1R23myvg5JjDGUX1vo5EuEFlZj1ZcM0Lr", RedirectLink: "#" },
+        // Fallback Stories
+        { Category: "Story", ImageLink: "1ixXL_2i-bqgJzjNDALTMQjNhAag108Vw", Tag: "Kolkata, India", Title: "Rahul & Priya's Wedding", Subtitle: "A beautiful exploration of traditional Bengali rituals.", RedirectLink: "#contact" },
+        { Category: "Story", ImageLink: "1iSTxlVH9q9H8ti7O47GcNvQKbc_2P5Nv", Tag: "Destination / Goa", Title: "A Beach Pre-Wedding", Subtitle: "Sunsets, ocean waves, and pure romance.", RedirectLink: "#contact" },
+        { Category: "Story", ImageLink: "1rRN185GcPtdce3gzeiA5gDlFdpkUKcKb", Tag: "Howrah, India", Title: "A Grand Reception", Subtitle: "Elegance, dazzling lights, and majestic aesthetics.", RedirectLink: "#contact" },
         // Fallback Videos (YouTube IDs)
         { Category: "Video", ImageLink: "lrQhh7CMFyg" },
         { Category: "Video", ImageLink: "a1B6_p9IycM" },
@@ -770,7 +796,7 @@
         while(images.length < 5) { images = images.concat(images); }
         
         const genRow = (imgs, dir) => {
-          const innerHtml = imgs.map(img => `<img src="${img}" class="marquee-img opacity-70" alt="Gallery Image" />`).join('');
+          const innerHtml = imgs.map(img => `<img src="${img}" class="marquee-img opacity-70 pointer-events-none select-none" draggable="false" alt="Gallery Image" />`).join('');
           return `<div class="hero-marquee-row ${dir}"><div class="flex">${innerHtml}</div><div class="flex">${innerHtml}</div></div>`;
         };
 
@@ -807,6 +833,37 @@
         } else {
           btnContainer.classList.add('hidden');
         }
+      }
+
+      function renderStories(items) {
+        document.getElementById('dynamic-stories').innerHTML = items.map((item, i) => {
+          let title = item.Title || 'A Timeless Tale';
+          let words = title.trim().split(' ');
+          let highlightedTitle = title;
+          
+          // Automatically highlight the last word as the "Key Word" in Royal Gold
+          if (words.length > 1) {
+            let lastWord = words.pop();
+            highlightedTitle = `${words.join(' ')} <span class="text-royal-gold italic">${lastWord}</span>`;
+          } else {
+            highlightedTitle = `<span class="text-royal-gold italic">${title}</span>`;
+          }
+
+          return `
+          <a href="${item.RedirectLink || '#contact'}" class="group block bg-white border border-royal-gold/20 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="${(i % 3) * 100}">
+            <div class="overflow-hidden aspect-[4/3] relative">
+              <img src="${getImageUrl(item.ImageLink)}" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105 filter sepia-[0.1]" alt="${item.Title}">
+              <!-- Royal Gradient Overlay -->
+              <div class="absolute inset-0 bg-gradient-to-t from-royal-dark/90 via-royal-dark/20 to-transparent opacity-90 group-hover:opacity-70 transition duration-500"></div>
+              
+              <div class="absolute bottom-0 left-0 w-full p-6 text-white z-10">
+                <p class="text-royal-gold font-cinzel text-[10px] font-bold tracking-[0.2em] uppercase mb-2 drop-shadow-md">${item.Tag || 'Royal Wedding'}</p>
+                <h3 class="text-2xl font-playfair font-bold mb-2">${highlightedTitle}</h3>
+                <p class="text-royal-ivory/80 font-light text-sm line-clamp-2">${item.Subtitle || 'A beautiful exploration of love and traditions.'}</p>
+              </div>
+            </div>
+          </a>
+        `}).join('');
       }
 
       function renderVideos(items) {
@@ -856,13 +913,16 @@
         let heroItems = data.filter(d => d.Category && d.Category.toLowerCase().includes('hero'));
         let portfolioItems = data.filter(d => d.Category && d.Category.toLowerCase().includes('portfolio'));
         let videoItems = data.filter(d => d.Category && d.Category.toLowerCase().includes('video'));
+        let storyItems = data.filter(d => d.Category && d.Category.toLowerCase().includes('story'));
 
-        if (heroItems.length === 0 && portfolioItems.length === 0 && videoItems.length === 0) {
+        if (heroItems.length === 0 && portfolioItems.length === 0 && videoItems.length === 0 && storyItems.length === 0) {
             heroItems = defaultData.filter(d => d.Category.toLowerCase().includes('hero'));
             portfolioItems = defaultData.filter(d => d.Category.toLowerCase().includes('portfolio'));
             videoItems = defaultData.filter(d => d.Category.toLowerCase().includes('video'));
+            storyItems = defaultData.filter(d => d.Category.toLowerCase().includes('story'));
         }
         if(videoItems.length === 0) videoItems = defaultData.filter(d => d.Category.toLowerCase().includes('video'));
+        if(storyItems.length === 0) storyItems = defaultData.filter(d => d.Category.toLowerCase().includes('story'));
 
         if(heroItems.length) renderHero(heroItems);
         
@@ -872,6 +932,8 @@
           renderPortfolio(globalPortfolioItems.slice(0, currentPortfolioCount), false);
         }
         
+        // Render max 6 stories
+        if(storyItems.length) renderStories(storyItems.slice(0, 6));
         if(videoItems.length) renderVideos(videoItems);
 
         // Preloader transition logic
