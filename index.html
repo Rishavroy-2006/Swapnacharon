@@ -26,7 +26,6 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
     <script>
       tailwind.config = {
@@ -55,16 +54,22 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 
-      * { -webkit-tap-highlight-color: transparent; }
+      *, *::before, *::after {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
 
-      html { scroll-behavior: auto; overscroll-behavior: none; }
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
 
       body {
         font-family: "Montserrat", sans-serif;
         background-color: #fdfbf7;
         color: #120d0e;
         overflow-x: hidden;
-        overscroll-behavior-y: none;
+        max-width: 100vw;
       }
 
       h1, h2, h3, h4, h5, h6, .font-serif { font-family: "Playfair Display", serif; }
@@ -94,52 +99,157 @@
       .nav-link:hover::after, .active-nav::after { width: 100%; }
       .nav-link:hover, .active-nav { color: #d4af37 !important; font-weight: 500; }
 
-      .form-input { background-color: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); color: #fdfbf7; transition: all 0.3s ease; }
-      .form-input:focus { border-color: #d4af37; outline: none; background-color: rgba(255,255,255,0.1); box-shadow: 0 0 10px rgba(212,175,55,0.2); }
-
       ::-webkit-scrollbar { width: 8px; }
       ::-webkit-scrollbar-track { background: #120d0e; }
       ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.5); border-radius: 10px; }
       ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
 
-      .faq-content { transition: max-height 0.3s ease-out, opacity 0.3s ease-out; max-height: 0; opacity: 0; overflow: hidden; }
-      .faq-content.open { max-height: 500px; opacity: 1; }
-      .faq-icon { transition: transform 0.3s ease; }
-      .faq-icon.rotate { transform: rotate(180deg); }
+      /* =============================================
+         HERO — the critical fix
+         ============================================= */
+      #home {
+        /* svh accounts for mobile browser chrome (address bar) */
+        height: 100svh;
+        min-height: 600px;
+        max-width: 100vw;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* overflow hidden clips the marquee to this box */
+        overflow: hidden;
+        background: #120d0e;
+      }
+      @supports not (height: 100svh) {
+        #home { height: 100vh; }
+      }
 
-      .hero-marquee-wrapper { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; display: flex; flex-direction: column; overflow: hidden; background: #120d0e; }
-      .hero-marquee-row { display: flex; height: 33.3333vh; width: max-content; }
-      .marquee-img { height: 100%; width: 25vw; object-fit: cover; border-right: 1px solid rgba(0,0,0,0.8); border-bottom: 1px solid rgba(0,0,0,0.8); }
-      @media (max-width: 768px) { .marquee-img { width: 50vw; } }
+      /* Wrapper fills the hero exactly */
+      .hero-marquee-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        display: flex;
+        flex-direction: column;
+        /* overflow hidden here too, belt-and-suspenders */
+        overflow: hidden;
+        background: #120d0e;
+      }
 
-      @keyframes marqueeLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+      /* Each row takes exactly 1/3 of the wrapper using flex */
+      .hero-marquee-row {
+        flex: 1;
+        min-height: 0;   /* critical — prevents flex children overflowing */
+        display: flex;
+        width: max-content;
+        overflow: hidden;
+      }
+
+      .marquee-img {
+        /* height fills the row, which is 1/3 of 100svh */
+        height: 100%;
+        width: 25vw;
+        object-fit: cover;
+        border-right: 1px solid rgba(0,0,0,0.8);
+        border-bottom: 1px solid rgba(0,0,0,0.8);
+        flex-shrink: 0;
+        display: block;
+      }
+      @media (max-width: 768px) {
+        .marquee-img { width: 50vw; }
+      }
+
+      @keyframes marqueeLeft  { 0% { transform: translateX(0); }    100% { transform: translateX(-50%); } }
       @keyframes marqueeRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
-      .marquee-left { animation: marqueeLeft 50s linear infinite; }
+      .marquee-left  { animation: marqueeLeft  50s linear infinite; }
       .marquee-right { animation: marqueeRight 50s linear infinite; }
 
-      .hero-overlay { background: linear-gradient(135deg, rgba(92,10,24,0.5) 0%, rgba(18,13,14,0.7) 100%); }
-      .particles-container { position: absolute; inset: 0; overflow: hidden; z-index: 15; pointer-events: none; }
-      .particle { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,0.8) 0%, rgba(212,175,55,0) 70%); animation: float 15s infinite ease-in-out; }
-      @keyframes float { 0%,100% { transform: translateY(0) translateX(0); opacity: 0.2; } 50% { transform: translateY(-100px) translateX(20px); opacity: 0.6; } }
+      .hero-overlay {
+        background: linear-gradient(135deg, rgba(92,10,24,0.55) 0%, rgba(18,13,14,0.75) 100%);
+      }
 
+      .particles-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: 15;
+        pointer-events: none;
+      }
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(212,175,55,0.8) 0%, rgba(212,175,55,0) 70%);
+        animation: float 15s infinite ease-in-out;
+      }
+      @keyframes float {
+        0%,100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+        50%      { transform: translateY(-80px) translateX(20px); opacity: 0.6; }
+      }
+
+      /* =============================================
+         VIDEO CAROUSEL
+         ============================================= */
       @keyframes scrollVideoLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
       .animate-scroll-video { animation: scrollVideoLeft 30s linear infinite; }
       .group:hover .pause-animation { animation-play-state: paused; }
       .video-thumb-container { width: 28rem; aspect-ratio: 16/9; flex-shrink: 0; }
       @media (max-width: 768px) { .video-thumb-container { width: 82vw; } }
 
-      .glass-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(212,175,55,0.2); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
-      .glass-card:hover { border-color: rgba(212,175,55,0.6); box-shadow: 0 10px 40px rgba(212,175,55,0.15); }
-      .gold-text-gradient { background: linear-gradient(to right, #d4af37, #f3e5ab, #d4af37); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      /* =============================================
+         GLASS CARD & GOLD GRADIENT
+         ============================================= */
+      .glass-card {
+        background: rgba(255,255,255,0.03);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(212,175,55,0.2);
+        box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+      }
+      .glass-card:hover {
+        border-color: rgba(212,175,55,0.6);
+        box-shadow: 0 10px 40px rgba(212,175,55,0.15);
+      }
+      .gold-text-gradient {
+        background: linear-gradient(to right, #d4af37, #f3e5ab, #d4af37);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
 
-      @keyframes loadingBar { 0% { width: 0%; left: 0%; } 50% { width: 100%; left: 0%; } 100% { width: 0%; left: 100%; } }
-      .preloader-hidden { opacity: 0; visibility: hidden; }
+      /* =============================================
+         PRELOADER
+         ============================================= */
+      @keyframes loadingBar {
+        0%   { width: 0%;    left: 0%; }
+        50%  { width: 100%;  left: 0%; }
+        100% { width: 0%;    left: 100%; }
+      }
+      .preloader-hidden { opacity: 0; visibility: hidden; transition: opacity 0.7s, visibility 0.7s; }
 
-      @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
-      .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.05) 75%); background-size: 1000px 100%; animation: shimmer 2s infinite linear; }
-      .skeleton-ivory { background: linear-gradient(90deg, rgba(212,175,55,0.05) 25%, rgba(212,175,55,0.12) 50%, rgba(212,175,55,0.05) 75%); background-size: 1000px 100%; animation: shimmer 2s infinite linear; }
+      /* =============================================
+         SKELETON LOADERS
+         ============================================= */
+      @keyframes shimmer {
+        0%   { background-position: -1000px 0; }
+        100% { background-position:  1000px 0; }
+      }
+      .skeleton {
+        background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.05) 75%);
+        background-size: 1000px 100%;
+        animation: shimmer 2s infinite linear;
+      }
+      .skeleton-ivory {
+        background: linear-gradient(90deg, rgba(212,175,55,0.05) 25%, rgba(212,175,55,0.12) 50%, rgba(212,175,55,0.05) 75%);
+        background-size: 1000px 100%;
+        animation: shimmer 2s infinite linear;
+      }
 
-      /* ===== MOBILE MENU — full screen slide-in from right ===== */
+      /* =============================================
+         MOBILE MENU — full-screen slide-in from right
+         ============================================= */
       #mobile-menu {
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
@@ -200,50 +310,19 @@
       }
       #mobile-close-btn:active { background: rgba(212,175,55,0.15); color: #D4AF37; border-color: #D4AF37; }
 
-      .mobile-menu-brand {
-        font-family: "Cinzel", serif;
-        font-size: 1.3rem;
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        color: #D4AF37;
-        text-align: center;
-        margin-bottom: 1.5rem;
-      }
-      .mobile-menu-sub {
-        font-size: 0.65rem;
-        letter-spacing: 0.3em;
-        color: rgba(253,251,247,0.4);
-        text-transform: uppercase;
-        text-align: center;
-        margin-top: -1rem;
-        margin-bottom: 2rem;
-      }
+      .mobile-menu-brand { font-family: "Cinzel", serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 0.3em; color: #D4AF37; text-align: center; margin-bottom: 0.4rem; }
+      .mobile-menu-sub   { font-size: 0.65rem; letter-spacing: 0.3em; color: rgba(253,251,247,0.4); text-transform: uppercase; text-align: center; margin-bottom: 2rem; }
 
-      .mobile-menu-socials {
-        display: flex; gap: 1.5rem; margin-top: 2rem; justify-content: center;
-      }
-      .mobile-menu-socials a {
-        color: rgba(253,251,247,0.4);
-        transition: color 0.3s;
-        width: 44px; height: 44px;
-        display: flex; align-items: center; justify-content: center;
-      }
+      .mobile-menu-socials { display: flex; gap: 1.5rem; margin-top: 2rem; justify-content: center; }
+      .mobile-menu-socials a { color: rgba(253,251,247,0.4); transition: color 0.3s; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
       .mobile-menu-socials a:active { color: #D4AF37; }
 
-      .mobile-contact-info {
-        margin-top: 1.5rem;
-        text-align: center;
-      }
-      .mobile-contact-info a {
-        display: block;
-        color: rgba(212,175,55,0.6);
-        font-family: "Cinzel", serif;
-        font-size: 0.7rem;
-        letter-spacing: 0.1em;
-        padding: 0.3rem 0;
-        transition: color 0.3s;
-      }
+      .mobile-contact-info { margin-top: 1.5rem; text-align: center; }
+      .mobile-contact-info a { display: block; color: rgba(212,175,55,0.6); font-family: "Cinzel", serif; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.3rem 0; transition: color 0.3s; text-decoration: none; }
       .mobile-contact-info a:active { color: #D4AF37; }
+
+      /* Nav offset for anchor links */
+      section { scroll-margin-top: 65px; }
     </style>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -269,6 +348,7 @@
     <!-- Navigation -->
     <nav id="main-nav" class="fixed w-full z-50 bg-royal-dark/80 backdrop-blur-md text-royal-ivory border-b border-royal-gold/20 transition-all duration-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
         <!-- Desktop -->
         <div class="hidden lg:flex justify-between items-center h-24">
           <div class="flex space-x-6 w-1/3 justify-end items-center">
@@ -277,20 +357,20 @@
             <a href="#portfolio" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Gallery</a>
           </div>
           <div class="w-1/3 flex justify-center text-center">
-            <a href="#" class="flex flex-col items-center group">
+            <a href="#home" class="flex flex-col items-center group">
               <span class="text-2xl md:text-3xl font-bold font-cinzel tracking-widest uppercase text-royal-gold group-hover:text-royal-goldLight transition duration-300" style="text-shadow:0 2px 4px rgba(0,0,0,0.8)">SWAPNACHARON</span>
               <span class="text-[9px] tracking-[0.3em] uppercase text-royal-ivory mt-1 opacity-80">Photography</span>
             </a>
           </div>
           <div class="flex space-x-6 w-1/3 justify-start items-center">
-            <a href="#videos" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Films</a>
-            <a href="#stories" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Stories</a>
+            <a href="#videos"   class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Films</a>
+            <a href="#stories"  class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Stories</a>
             <a href="#packages" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Packages</a>
-            <a href="#contact" class="nav-link text-xs font-medium uppercase tracking-[0.15em] text-royal-gold">Contact</a>
+            <a href="#contact"  class="nav-link text-xs font-medium uppercase tracking-[0.15em] text-royal-gold">Contact</a>
           </div>
         </div>
 
-        <!-- Mobile nav bar -->
+        <!-- Mobile bar -->
         <div class="lg:hidden flex justify-between items-center h-16">
           <a href="#home" class="flex flex-col leading-tight">
             <span class="text-lg font-bold font-cinzel tracking-widest uppercase text-royal-gold">SWAPNACHARON</span>
@@ -308,74 +388,92 @@
       </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
+    <!-- Mobile Menu -->
     <div id="mobile-menu" aria-hidden="true">
       <button id="mobile-close-btn" aria-label="Close menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
           <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
+          <line x1="6"  y1="6" x2="18" y2="18"/>
         </svg>
       </button>
-
       <div class="mobile-menu-brand">SWAPNACHARON</div>
       <div class="mobile-menu-sub">Photography</div>
-
       <nav style="width:100%;max-width:300px;">
-        <a href="#home" class="mobile-nav-link">Home</a>
-        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#home"      class="mobile-nav-link">Home</a>
+        <a href="#about"     class="mobile-nav-link">About</a>
         <a href="#portfolio" class="mobile-nav-link">Gallery</a>
-        <a href="#videos" class="mobile-nav-link">Films</a>
-        <a href="#stories" class="mobile-nav-link">Stories</a>
-        <a href="#packages" class="mobile-nav-link">Packages</a>
-        <a href="#contact" class="mobile-nav-link gold">Contact Us</a>
+        <a href="#videos"    class="mobile-nav-link">Films</a>
+        <a href="#stories"   class="mobile-nav-link">Stories</a>
+        <a href="#packages"  class="mobile-nav-link">Packages</a>
+        <a href="#contact"   class="mobile-nav-link gold">Contact Us</a>
       </nav>
-
       <div class="mobile-menu-socials">
         <a href="https://www.instagram.com/swapnacharon_photography?igsh=MmVwMDZxaGVqMzI3" target="_blank" aria-label="Instagram"><i data-feather="instagram" style="width:20px;height:20px"></i></a>
-        <a href="https://www.facebook.com/share/1PTTThX1S8/" target="_blank" aria-label="Facebook"><i data-feather="facebook" style="width:20px;height:20px"></i></a>
+        <a href="https://www.facebook.com/share/1PTTThX1S8/"  target="_blank" aria-label="Facebook"><i data-feather="facebook"  style="width:20px;height:20px"></i></a>
         <a href="https://youtube.com/@swapnacharonphotography?si=96PyjmXRCwjlky5q" target="_blank" aria-label="YouTube"><i data-feather="youtube" style="width:20px;height:20px"></i></a>
         <a href="https://wa.me/917450076182" target="_blank" aria-label="WhatsApp">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
         </a>
       </div>
-
       <div class="mobile-contact-info">
         <a href="tel:+917450076182">+91 74500 76182</a>
         <a href="tel:+916291355763">+91 62913 55763</a>
       </div>
     </div>
 
-    <!-- WhatsApp Floating -->
-    <a href="https://wa.me/917450076182" target="_blank" class="fixed bottom-6 right-6 z-[60] bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-2xl transition-all duration-300 flex items-center justify-center">
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/917450076182" target="_blank"
+      class="fixed bottom-6 right-6 z-[60] bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-2xl transition-all duration-300 flex items-center justify-center">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+      </svg>
     </a>
 
-    <!-- Hero -->
-    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-royal-dark">
-      <div id="dynamic-hero-marquee" class="hero-marquee-wrapper transform scale-110"></div>
+    <!-- ============================================================
+         HERO SECTION
+         ============================================================ -->
+    <section id="home">
+      <!-- Marquee background -->
+      <div id="dynamic-hero-marquee" class="hero-marquee-wrapper"></div>
+
+      <!-- Gradient overlay -->
       <div class="absolute inset-0 hero-overlay z-10 pointer-events-none"></div>
+
+      <!-- Particles -->
       <div class="particles-container">
         <div class="particle w-12 h-12 left-[10%] top-[80%]" style="animation-delay:0s"></div>
         <div class="particle w-20 h-20 left-[80%] top-[70%]" style="animation-delay:2s"></div>
-        <div class="particle w-8 h-8 left-[30%] top-[40%]" style="animation-delay:4s"></div>
+        <div class="particle w-8  h-8  left-[30%] top-[40%]" style="animation-delay:4s"></div>
         <div class="particle w-16 h-16 left-[70%] top-[20%]" style="animation-delay:1s"></div>
         <div class="particle w-24 h-24 left-[50%] top-[90%]" style="animation-delay:5s"></div>
       </div>
-      <div class="relative z-20 text-center px-5 mt-16 max-w-5xl mx-auto" data-aos="zoom-in" data-aos-duration="1500">
-        <p class="text-royal-gold font-cinzel font-semibold tracking-[0.3em] md:tracking-[0.4em] uppercase text-xs md:text-base mb-4 md:mb-6 drop-shadow-lg">Swapnacharon Photography</p>
-        <h1 class="text-3xl sm:text-5xl md:text-7xl font-bold mb-5 md:mb-8 font-playfair text-white leading-tight drop-shadow-2xl">
+
+      <!-- Hero content -->
+      <div class="relative z-20 text-center px-5 w-full max-w-5xl mx-auto" data-aos="zoom-in" data-aos-duration="1500">
+        <p class="text-royal-gold font-cinzel font-semibold tracking-[0.25em] md:tracking-[0.4em] uppercase text-xs md:text-base mb-3 md:mb-6 drop-shadow-lg">
+          Swapnacharon Photography
+        </p>
+        <h1 class="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 font-playfair text-white leading-tight drop-shadow-2xl">
           Capturing Timeless <br/>
           <span class="italic font-light gold-text-gradient">Royal Moments</span>
         </h1>
-        <p class="text-royal-ivory/80 text-sm md:text-lg mb-8 md:mb-12 font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
+        <p class="text-royal-ivory/80 text-sm md:text-lg mb-7 md:mb-12 font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
           Immersive storytelling and cinematic visuals that preserve the majestic essence of your grand celebration.
         </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="#packages" class="px-8 py-4 border border-royal-gold text-royal-gold text-xs font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition-all duration-500 shadow-[0_0_20px_rgba(212,175,55,0.3)]">View Packages</a>
-          <a href="#contact" class="px-8 py-4 bg-royal-gold/10 border border-royal-gold/40 text-royal-ivory text-xs font-bold tracking-widest uppercase hover:bg-royal-gold/20 transition-all duration-500">Book Now</a>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center w-full max-w-xs sm:max-w-none mx-auto">
+          <a href="#packages"
+            class="w-full sm:w-auto px-8 py-4 border border-royal-gold text-royal-gold text-xs font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition-all duration-500 text-center shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+            View Packages
+          </a>
+          <a href="#contact"
+            class="w-full sm:w-auto px-8 py-4 bg-royal-gold/10 border border-royal-gold/40 text-royal-ivory text-xs font-bold tracking-widest uppercase hover:bg-royal-gold/20 transition-all duration-500 text-center">
+            Book Now
+          </a>
         </div>
       </div>
-      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-80">
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-80">
         <span class="text-royal-gold text-[10px] tracking-widest uppercase mb-2">Scroll</span>
         <div class="w-px h-10 bg-gradient-to-b from-royal-gold to-transparent"></div>
       </div>
@@ -388,7 +486,8 @@
           <div class="lg:w-1/2 relative w-full" data-aos="fade-right" data-aos-duration="1200">
             <div class="absolute -inset-4 border border-royal-gold/40 transform translate-x-4 translate-y-4 hidden md:block"></div>
             <div class="relative p-3 md:p-4 bg-white/50 backdrop-blur-sm border border-royal-gold/20 shadow-xl">
-              <img src="public/images/client.jpg" alt="Dip Das - Photographer" class="w-full h-auto max-h-[420px] md:max-h-[500px] lg:max-h-[700px] object-cover object-top filter sepia-[0.1]" />
+              <img src="public/images/client.jpg" alt="Dip Das - Photographer"
+                class="w-full h-auto max-h-[420px] md:max-h-[500px] lg:max-h-[700px] object-cover object-top filter sepia-[0.1]" />
             </div>
           </div>
           <div class="lg:w-1/2 w-full" data-aos="fade-left" data-aos-duration="1200">
@@ -429,7 +528,10 @@
         </div>
         <div id="dynamic-portfolio" class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-4 mt-6 lg:mt-10" data-aos="fade-up" data-aos-delay="200"></div>
         <div id="portfolio-load-more-container" class="text-center mt-10 lg:mt-16 hidden" data-aos="fade-up">
-          <button id="portfolio-load-more-btn" class="px-8 lg:px-10 py-4 border border-royal-gold text-royal-gold text-xs font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-500">View More Masterpieces</button>
+          <button id="portfolio-load-more-btn"
+            class="px-8 lg:px-10 py-4 border border-royal-gold text-royal-gold text-xs font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-500">
+            View More Masterpieces
+          </button>
         </div>
       </div>
     </section>
@@ -478,6 +580,7 @@
           <p class="text-gray-400 max-w-2xl mx-auto font-light text-sm md:text-base lg:text-lg">Tailored collections designed to provide a rich, comprehensive documentation of your magnificent day.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center">
+
           <!-- Basic -->
           <div class="glass-card rounded-lg p-6 lg:p-10 text-center transition-all duration-500 hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="0">
             <h3 class="text-xl lg:text-2xl font-cinzel font-bold text-white mb-2">Basic</h3>
@@ -493,9 +596,10 @@
             </ul>
             <a href="#contact" class="inline-block w-full py-4 border border-royal-gold/50 text-royal-gold font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-300 text-xs">Inquire Now</a>
           </div>
+
           <!-- Standard -->
           <div class="glass-card rounded-lg p-6 lg:p-10 text-center transition-all duration-500 hover:-translate-y-2 relative border-royal-gold/60 shadow-[0_0_30px_rgba(212,175,55,0.15)] bg-gradient-to-b from-white/5 to-royal-maroon/20" data-aos="fade-up" data-aos-delay="100">
-            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-royal-gold to-[#fff3b0] text-royal-dark px-5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm shadow-[0_0_15px_rgba(212,175,55,0.6)] whitespace-nowrap">Best Seller</div>
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-royal-gold to-[#fff3b0] text-royal-dark px-5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm shadow-[0_0_15px_rgba(212,175,55,0.6)] whitespace-nowrap">Best Seller</div>
             <h3 class="text-2xl lg:text-3xl font-cinzel font-bold text-white mb-2 mt-4">Standard</h3>
             <p class="text-royal-gold/80 font-light text-[10px] lg:text-xs tracking-widest uppercase mb-6 border-b border-royal-gold/30 pb-4">The Perfect Blend</p>
             <div class="text-4xl lg:text-5xl font-bold text-white mb-8 font-playfair drop-shadow-md"><span class="text-xl align-top">₹</span>89,999</div>
@@ -503,17 +607,18 @@
               <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>4 days coverage both sides</span></li>
               <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Pre-wed photo + video (5m, 2 loc.)</span></li>
               <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>64GB pendrive + all raw photos</span></li>
-              <li class="flex items-start"><i data-feather="check" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>High-resolution photos</span></li>
-              <li class="flex items-start"><i data-feather="check" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Online gallery</span></li>
-              <li class="flex items-start"><i data-feather="star" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0 fill-royal-gold"></i><span class="font-medium text-white">2 premium albums + table calendar</span></li>
+              <li class="flex items-start"><i data-feather="check"        class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>High-resolution photos</span></li>
+              <li class="flex items-start"><i data-feather="check"        class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Online gallery</span></li>
+              <li class="flex items-start"><i data-feather="star"         class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0 fill-royal-gold"></i><span class="font-medium text-white">2 premium albums + table calendar</span></li>
               <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Drone shots (pre-wed, haldi, wed)</span></li>
               <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>3 cinematic reels</span></li>
             </ul>
             <a href="#contact" class="inline-block w-full py-4 bg-gradient-to-r from-royal-gold to-[#c5a028] text-royal-dark font-bold tracking-widest uppercase hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition duration-300 text-xs">Secure Your Date</a>
           </div>
+
           <!-- Premium -->
           <div class="glass-card rounded-lg p-6 lg:p-10 text-center transition-all duration-500 hover:-translate-y-2 relative border-royal-gold/40 bg-royal-maroonDark/40" data-aos="fade-up" data-aos-delay="200">
-            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 border border-royal-gold bg-royal-dark text-royal-gold px-5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm whitespace-nowrap">Luxury</div>
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 border border-royal-gold bg-royal-dark text-royal-gold px-5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm whitespace-nowrap">Luxury</div>
             <h3 class="text-xl lg:text-2xl font-cinzel font-bold text-white mb-2 mt-2">Premium</h3>
             <p class="text-royal-gold/80 font-light text-[10px] lg:text-xs tracking-widest uppercase mb-6 border-b border-royal-gold/20 pb-4">The Grand Experience</p>
             <div class="text-3xl lg:text-4xl font-bold text-white mb-8 font-playfair"><span class="text-xl align-top">₹</span>1,19,999</div>
@@ -522,15 +627,16 @@
               <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Pre-wed photo + video (teaser incl)</span></li>
               <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>128GB pendrive (all raw files)</span></li>
               <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>High-resolution photos & Gallery</span></li>
-              <li class="flex items-start"><i data-feather="star" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0 fill-royal-gold"></i><span class="font-medium text-white">2 premium albums + calendar + gift</span></li>
-              <li class="flex items-start"><i data-feather="camera" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Drone coverage (all major events)</span></li>
-              <li class="flex items-start"><i data-feather="film" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Wedding teaser (5 min)</span></li>
-              <li class="flex items-start"><i data-feather="video" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Full cinematic video (1 hr 5m+)</span></li>
-              <li class="flex items-start"><i data-feather="image" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Invitation e-card video</span></li>
-              <li class="flex items-start"><i data-feather="instagram" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>5 cinematic reels</span></li>
+              <li class="flex items-start"><i data-feather="star"         class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0 fill-royal-gold"></i><span class="font-medium text-white">2 premium albums + calendar + gift</span></li>
+              <li class="flex items-start"><i data-feather="camera"       class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Drone coverage (all major events)</span></li>
+              <li class="flex items-start"><i data-feather="film"         class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Wedding teaser (5 min)</span></li>
+              <li class="flex items-start"><i data-feather="video"        class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Full cinematic video (1 hr 5m+)</span></li>
+              <li class="flex items-start"><i data-feather="image"        class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Invitation e-card video</span></li>
+              <li class="flex items-start"><i data-feather="instagram"    class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>5 cinematic reels</span></li>
             </ul>
             <a href="#contact" class="inline-block w-full py-4 border border-royal-gold/50 text-royal-gold font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-300 text-xs">Request Booking</a>
           </div>
+
         </div>
       </div>
     </section>
@@ -566,27 +672,35 @@
               </div>
             </div>
           </div>
+
           <div class="lg:col-span-3" data-aos="fade-left">
             <div class="bg-white border border-royal-gold/20 p-5 sm:p-8 md:p-12 shadow-2xl">
               <form id="contact-form" class="space-y-5 lg:space-y-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-8">
                   <div>
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Full Name</label>
-                    <input type="text" name="from_name" required class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300" placeholder="E.g. Anjali & Rahul" />
+                    <input type="text" name="from_name" required
+                      class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300"
+                      placeholder="E.g. Anjali & Rahul" />
                   </div>
                   <div>
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Phone</label>
-                    <input type="tel" name="phone" required class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300" placeholder="+91" />
+                    <input type="tel" name="phone" required
+                      class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300"
+                      placeholder="+91" />
                   </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-8">
                   <div>
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Email</label>
-                    <input type="email" name="reply_to" required class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300" placeholder="your@email.com" />
+                    <input type="email" name="reply_to" required
+                      class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300"
+                      placeholder="your@email.com" />
                   </div>
                   <div>
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Interested Package</label>
-                    <select name="package" required class="w-full bg-white border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none cursor-pointer">
+                    <select name="package" required
+                      class="w-full bg-white border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none cursor-pointer">
                       <option value="" disabled selected>Select an option...</option>
                       <option value="basic">Basic (₹49,999)</option>
                       <option value="standard">Standard (₹89,999) - Best Seller</option>
@@ -597,9 +711,14 @@
                 </div>
                 <div>
                   <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Event Dates & Venue Details</label>
-                  <textarea name="message" rows="3" required class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none resize-none placeholder-gray-300" placeholder="Tell us about your majestic celebration..."></textarea>
+                  <textarea name="message" rows="3" required
+                    class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none resize-none placeholder-gray-300"
+                    placeholder="Tell us about your majestic celebration..."></textarea>
                 </div>
-                <button type="submit" class="mt-4 lg:mt-8 w-full py-4 lg:py-5 bg-royal-dark text-royal-gold text-xs font-bold tracking-widest uppercase hover:bg-royal-maroon hover:text-white transition duration-500 shadow-xl">Submit Royal Inquiry</button>
+                <button type="submit"
+                  class="mt-4 lg:mt-8 w-full py-4 lg:py-5 bg-royal-dark text-royal-gold text-xs font-bold tracking-widest uppercase hover:bg-royal-maroon hover:text-white transition duration-500 shadow-xl">
+                  Submit Royal Inquiry
+                </button>
               </form>
             </div>
           </div>
@@ -607,14 +726,15 @@
       </div>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-royal-dark py-12 border-t border-royal-gold/20 relative overflow-hidden">
       <div class="absolute -top-32 -left-32 w-64 h-64 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 rounded-full"></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center relative z-10">
         <span class="text-2xl font-bold text-royal-gold font-cinzel tracking-widest uppercase mb-6">SWAPNACHARON</span>
         <div class="flex space-x-6 md:space-x-8 mb-8">
           <a href="https://www.instagram.com/swapnacharon_photography?igsh=MmVwMDZxaGVqMzI3" class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"><i data-feather="instagram" class="w-5 h-5"></i></a>
-          <a href="https://www.facebook.com/share/1PTTThX1S8/" class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"><i data-feather="facebook" class="w-5 h-5"></i></a>
-          <a href="https://youtube.com/@swapnacharonphotography?si=96PyjmXRCwjlky5q" class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"><i data-feather="youtube" class="w-5 h-5"></i></a>
+          <a href="https://www.facebook.com/share/1PTTThX1S8/"  class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"><i data-feather="facebook"  class="w-5 h-5"></i></a>
+          <a href="https://youtube.com/@swapnacharonphotography?si=96PyjmXRCwjlky5q" class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"><i data-feather="youtube"  class="w-5 h-5"></i></a>
         </div>
         <p class="text-gray-500 text-xs font-light tracking-[0.1em] uppercase">
           &copy; <script>document.write(new Date().getFullYear())</script> Swapnacharon Photography. Capturing Royal Legacies.
@@ -630,37 +750,55 @@
         </div>
         <h3 class="text-2xl md:text-3xl font-playfair font-bold text-white mb-4">Inquiry Received</h3>
         <p class="text-gray-300 font-light mb-8 md:mb-10 text-sm leading-relaxed">Thank you for considering us to document your royal celebration. We will reach out to you very soon.</p>
-        <button id="close-success-modal" class="px-8 md:px-10 py-4 bg-royal-gold text-royal-dark text-xs font-bold tracking-widest uppercase hover:bg-white transition w-full shadow-[0_0_15px_rgba(212,175,55,0.4)]">Return</button>
+        <button id="close-success-modal"
+          class="px-8 md:px-10 py-4 bg-royal-gold text-royal-dark text-xs font-bold tracking-widest uppercase hover:bg-white transition w-full shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+          Return
+        </button>
       </div>
     </div>
 
     <!-- Video Modal -->
     <div id="video-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-royal-dark/95 backdrop-blur-md">
-      <button id="close-video-modal" class="absolute top-4 md:top-6 right-4 md:right-6 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none w-11 h-11 flex items-center justify-center">
-        <svg width="32" height="32" class="md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <button id="close-video-modal"
+        class="absolute top-4 md:top-6 right-4 md:right-6 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none w-11 h-11 flex items-center justify-center">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
       </button>
       <div class="w-full max-w-5xl aspect-video px-2 md:px-4 relative border border-royal-gold/20 p-1 md:p-2 rounded bg-black mt-10 md:mt-0">
-        <iframe id="video-iframe" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="video-iframe" class="w-full h-full" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
       </div>
     </div>
 
     <!-- Image Lightbox -->
     <div id="image-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-royal-dark/95 backdrop-blur-md">
-      <button id="close-image-modal" class="absolute top-4 right-4 md:top-6 md:right-6 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none w-11 h-11 flex items-center justify-center">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <button id="close-image-modal"
+        class="absolute top-4 right-4 md:top-6 md:right-6 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none w-11 h-11 flex items-center justify-center">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
       </button>
-      <button id="lightbox-prev" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none w-11 h-11 flex items-center justify-center bg-royal-dark/60 rounded-full border border-royal-gold/20">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      <button id="lightbox-prev"
+        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none w-11 h-11 flex items-center justify-center bg-royal-dark/60 rounded-full border border-royal-gold/20">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <button id="lightbox-next" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none w-11 h-11 flex items-center justify-center bg-royal-dark/60 rounded-full border border-royal-gold/20">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      <button id="lightbox-next"
+        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none w-11 h-11 flex items-center justify-center bg-royal-dark/60 rounded-full border border-royal-gold/20">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
       <div class="w-full max-w-5xl px-14 md:px-20 flex items-center justify-center">
-        <img id="lightbox-img" src="" alt="Portfolio Image" class="max-h-[85vh] max-w-full object-contain border border-royal-gold/20 shadow-2xl" />
+        <img id="lightbox-img" src="" alt="Portfolio Image"
+          class="max-h-[85vh] max-w-full object-contain border border-royal-gold/20 shadow-2xl" />
       </div>
-      <div id="lightbox-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 text-royal-gold font-cinzel text-xs tracking-widest bg-royal-dark/70 px-4 py-1 rounded-full"></div>
+      <div id="lightbox-counter"
+        class="absolute bottom-5 left-1/2 -translate-x-1/2 text-royal-gold font-cinzel text-xs tracking-widest bg-royal-dark/70 px-4 py-1 rounded-full"></div>
     </div>
 
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
     <script>
       const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRc2RfFuFEeu9yysW6oECw9C8bT037IqDPUUgrV8Wk68Vd1rPr2wO-ycnwUXWqqs1aKveB_C5vKAUn3/pub?gid=0&single=true&output=csv";
 
@@ -678,9 +816,9 @@
         { Category: "Portfolio", ImageLink: "1_X07rFVuU71M2upvAbTgXoTu_AD-Xlvq", RedirectLink: "" },
         { Category: "Portfolio", ImageLink: "1CHHq8obgA2aZLyTApuqdVa7j0FT_PM-g", RedirectLink: "" },
         { Category: "Portfolio", ImageLink: "1R23myvg5JjDGUX1vo5EuEFlZj1ZcM0Lr", RedirectLink: "" },
-        { Category: "Story", ImageLink: "1ixXL_2i-bqgJzjNDALTMQjNhAag108Vw", Tag: "Kolkata, India", Title: "Rahul & Priya's Wedding", Subtitle: "A beautiful exploration of traditional Bengali rituals.", RedirectLink: "#contact" },
-        { Category: "Story", ImageLink: "1iSTxlVH9q9H8ti7O47GcNvQKbc_2P5Nv", Tag: "Destination / Goa", Title: "A Beach Pre-Wedding", Subtitle: "Sunsets, ocean waves, and pure romance.", RedirectLink: "#contact" },
-        { Category: "Story", ImageLink: "1rRN185GcPtdce3gzeiA5gDlFdpkUKcKb", Tag: "Howrah, India", Title: "A Grand Reception", Subtitle: "Elegance, dazzling lights, and majestic aesthetics.", RedirectLink: "#contact" },
+        { Category: "Story", ImageLink: "1ixXL_2i-bqgJzjNDALTMQjNhAag108Vw", Tag: "Kolkata, India",    Title: "Rahul & Priya's Wedding",  Subtitle: "A beautiful exploration of traditional Bengali rituals.", RedirectLink: "#contact" },
+        { Category: "Story", ImageLink: "1iSTxlVH9q9H8ti7O47GcNvQKbc_2P5Nv", Tag: "Destination / Goa", Title: "A Beach Pre-Wedding",       Subtitle: "Sunsets, ocean waves, and pure romance.",               RedirectLink: "#contact" },
+        { Category: "Story", ImageLink: "1rRN185GcPtdce3gzeiA5gDlFdpkUKcKb", Tag: "Howrah, India",     Title: "A Grand Reception",        Subtitle: "Elegance, dazzling lights, and majestic aesthetics.",   RedirectLink: "#contact" },
         { Category: "Video", ImageLink: "lrQhh7CMFyg" },
         { Category: "Video", ImageLink: "a1B6_p9IycM" },
         { Category: "Video", ImageLink: "ec7vUWQIhg0" },
@@ -690,11 +828,11 @@
       function getImageUrl(url) {
         if (!url) return "";
         if (url.includes("thumbnail") || url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) return url;
-        if (url.startsWith("http") && (url.includes("cloudinary") || url.includes("imgbb") || url.includes("res.cloudinary"))) return url;
+        if (url.startsWith("http") && (url.includes("cloudinary") || url.includes("imgbb"))) return url;
         const match = url.match(/\/d\/(.*?)\/|id=([^&]+)/);
-        const id = match ? match[1] || match[2] : url.trim();
+        const id = match ? (match[1] || match[2]) : url.trim();
         if (id && !id.includes("/") && !id.startsWith("http")) {
-          return `https://drive.google.com/thumbnail?id=${id}&sz=w1500`;
+          return "https://drive.google.com/thumbnail?id=" + id + "&sz=w1500";
         }
         return url;
       }
@@ -705,93 +843,76 @@
       let lightboxImages = [];
       let lightboxIndex = 0;
 
-      // ===== LENIS =====
-      const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smooth: true,
-        smoothTouch: false,
-      });
-      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-      requestAnimationFrame(raf);
+      /* ---------- scroll lock (native) ---------- */
+      function lockScroll()   { document.body.style.overflow = "hidden"; }
+      function unlockScroll() { document.body.style.overflow = "";       }
 
-      // ===== SCROLL LOCK HELPERS =====
-      function lockScroll() {
-        document.body.style.overflow = "hidden";
-        lenis.stop();
-      }
-      function unlockScroll() {
-        document.body.style.overflow = "";
-        document.documentElement.style.overflow = "";
-        lenis.start();
-      }
-
-      // ===== LIGHTBOX =====
+      /* ---------- lightbox ---------- */
       function openLightbox(index) {
         lightboxIndex = index;
         document.getElementById("lightbox-img").src = lightboxImages[lightboxIndex];
-        document.getElementById("lightbox-counter").textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
-        const modal = document.getElementById("image-modal");
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
+        document.getElementById("lightbox-counter").textContent = (lightboxIndex + 1) + " / " + lightboxImages.length;
+        document.getElementById("image-modal").classList.remove("hidden");
+        document.getElementById("image-modal").classList.add("flex");
         lockScroll();
       }
       function closeLightbox() {
-        const modal = document.getElementById("image-modal");
-        modal.classList.add("hidden");
-        modal.classList.remove("flex");
+        document.getElementById("image-modal").classList.add("hidden");
+        document.getElementById("image-modal").classList.remove("flex");
         document.getElementById("lightbox-img").src = "";
         unlockScroll();
       }
 
-      // ===== RENDER FUNCTIONS =====
+      /* ---------- render hero ---------- */
       function renderHero(items) {
         if (!items.length) return;
-        let images = items.map((item) => getImageUrl(item.ImageLink));
+        let images = items.map(function(item) { return getImageUrl(item.ImageLink); });
         while (images.length < 5) { images = images.concat(images); }
-        const genRow = (imgs, dir) => {
-          const innerHtml = imgs.map((img) => `<img src="${img}" class="marquee-img opacity-70 pointer-events-none select-none transform-gpu will-change-transform" draggable="false" alt="Gallery Image" />`).join("");
-          return `<div class="hero-marquee-row ${dir}"><div class="flex">${innerHtml}</div><div class="flex">${innerHtml}</div></div>`;
-        };
+
+        function genRow(imgs, dir) {
+          var inner = imgs.map(function(img) {
+            return '<img src="' + img + '" class="marquee-img opacity-70 pointer-events-none select-none" draggable="false" alt="Gallery Image" />';
+          }).join("");
+          return '<div class="hero-marquee-row ' + dir + '"><div class="flex">' + inner + '</div><div class="flex">' + inner + '</div></div>';
+        }
+
         document.getElementById("dynamic-hero-marquee").innerHTML =
           genRow(images.slice(0, 5), "marquee-left") +
           genRow(images.slice().reverse().slice(0, 5), "marquee-right") +
-          genRow(images.slice(0, 5).sort(() => 0.5 - Math.random()), "marquee-left");
+          genRow(images.slice(0, 5).sort(function() { return 0.5 - Math.random(); }), "marquee-left");
       }
 
-      function renderPortfolio(items, append = false) {
-        const html = items.map((item, index) => {
-          const globalIndex = append ? currentPortfolioCount - items.length + index : index;
-          const hasLink = item.RedirectLink && item.RedirectLink.trim() !== "" && item.RedirectLink.trim() !== "#";
+      /* ---------- render portfolio ---------- */
+      function renderPortfolio(items, append) {
+        append = append || false;
+        var html = items.map(function(item, index) {
+          var globalIndex = append ? (currentPortfolioCount - items.length + index) : index;
+          var hasLink = item.RedirectLink && item.RedirectLink.trim() !== "" && item.RedirectLink.trim() !== "#";
           if (hasLink) {
-            return `<a href="${item.RedirectLink}" target="_blank" class="group relative aspect-square overflow-hidden block border border-royal-gold/10 transform-gpu">
-              <img src="${getImageUrl(item.ImageLink)}" loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter sepia-[0.1] transform-gpu will-change-transform" alt="Portfolio Image">
-              <div class="absolute inset-0 bg-gradient-to-t from-royal-maroon/80 to-royal-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                <div class="w-12 h-12 border border-royal-gold rounded-full flex items-center justify-center transform scale-50 group-hover:scale-100 transition-transform duration-500">
-                  <i data-feather="external-link" class="text-royal-gold w-5 h-5"></i>
-                </div>
-              </div>
-            </a>`;
+            return '<a href="' + item.RedirectLink + '" target="_blank" class="group relative aspect-square overflow-hidden block border border-royal-gold/10">' +
+              '<img src="' + getImageUrl(item.ImageLink) + '" loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter sepia-[0.1]" alt="Portfolio Image">' +
+              '<div class="absolute inset-0 bg-gradient-to-t from-royal-maroon/80 to-royal-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">' +
+              '<div class="w-12 h-12 border border-royal-gold rounded-full flex items-center justify-center transform scale-50 group-hover:scale-100 transition-transform duration-500">' +
+              '<i data-feather="external-link" class="text-royal-gold w-5 h-5"></i></div></div></a>';
           } else {
-            return `<div data-index="${globalIndex}" class="lightbox-trigger group relative aspect-square overflow-hidden block border border-royal-gold/10 transform-gpu cursor-pointer">
-              <img src="${getImageUrl(item.ImageLink)}" loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter sepia-[0.1] transform-gpu will-change-transform" alt="Portfolio Image">
-              <div class="absolute inset-0 bg-gradient-to-t from-royal-maroon/80 to-royal-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                <div class="w-12 h-12 border border-royal-gold rounded-full flex items-center justify-center transform scale-50 group-hover:scale-100 transition-transform duration-500">
-                  <i data-feather="zoom-in" class="text-royal-gold w-5 h-5"></i>
-                </div>
-              </div>
-            </div>`;
+            return '<div data-index="' + globalIndex + '" class="lightbox-trigger group relative aspect-square overflow-hidden block border border-royal-gold/10 cursor-pointer">' +
+              '<img src="' + getImageUrl(item.ImageLink) + '" loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter sepia-[0.1]" alt="Portfolio Image">' +
+              '<div class="absolute inset-0 bg-gradient-to-t from-royal-maroon/80 to-royal-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">' +
+              '<div class="w-12 h-12 border border-royal-gold rounded-full flex items-center justify-center transform scale-50 group-hover:scale-100 transition-transform duration-500">' +
+              '<i data-feather="zoom-in" class="text-royal-gold w-5 h-5"></i></div></div></div>';
           }
         }).join("");
 
-        const container = document.getElementById("dynamic-portfolio");
+        var container = document.getElementById("dynamic-portfolio");
         if (append) { container.innerHTML += html; } else { container.innerHTML = html; }
         feather.replace();
-        lightboxImages = globalPortfolioItems.map((item) => getImageUrl(item.ImageLink));
-        document.querySelectorAll(".lightbox-trigger").forEach((el) => {
-          el.addEventListener("click", () => openLightbox(parseInt(el.dataset.index)));
+
+        lightboxImages = globalPortfolioItems.map(function(item) { return getImageUrl(item.ImageLink); });
+        document.querySelectorAll(".lightbox-trigger").forEach(function(el) {
+          el.addEventListener("click", function() { openLightbox(parseInt(el.dataset.index)); });
         });
-        const btnContainer = document.getElementById("portfolio-load-more-container");
+
+        var btnContainer = document.getElementById("portfolio-load-more-container");
         if (currentPortfolioCount < globalPortfolioItems.length) {
           btnContainer.classList.remove("hidden");
         } else {
@@ -799,99 +920,100 @@
         }
       }
 
+      /* ---------- render stories ---------- */
       function renderStories(items) {
-        document.getElementById("dynamic-stories").innerHTML = items.map((item, i) => {
-          let title = item.Title || "A Timeless Tale";
-          let words = title.trim().split(" ");
-          let highlightedTitle = title;
+        document.getElementById("dynamic-stories").innerHTML = items.map(function(item, i) {
+          var title = item.Title || "A Timeless Tale";
+          var words = title.trim().split(" ");
+          var highlightedTitle = title;
           if (words.length > 1) {
-            let lastWord = words.pop();
-            highlightedTitle = `${words.join(" ")} <span class="text-royal-gold italic">${lastWord}</span>`;
+            var lastWord = words.pop();
+            highlightedTitle = words.join(" ") + ' <span class="text-royal-gold italic">' + lastWord + '</span>';
           } else {
-            highlightedTitle = `<span class="text-royal-gold italic">${title}</span>`;
+            highlightedTitle = '<span class="text-royal-gold italic">' + title + '</span>';
           }
-          return `<a href="${item.RedirectLink || "#contact"}" class="group block bg-white border border-royal-gold/20 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative transform-gpu" data-aos="fade-up" data-aos-delay="${(i % 3) * 100}">
-            <div class="overflow-hidden aspect-[4/3] relative">
-              <img src="${getImageUrl(item.ImageLink)}" loading="lazy" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105 filter sepia-[0.1] transform-gpu will-change-transform" alt="${item.Title}">
-              <div class="absolute inset-0 bg-gradient-to-t from-royal-dark/90 via-royal-dark/20 to-transparent opacity-90 group-hover:opacity-70 transition duration-500"></div>
-              <div class="absolute bottom-0 left-0 w-full p-5 text-white z-10">
-                <p class="text-royal-gold font-cinzel text-[10px] font-bold tracking-[0.2em] uppercase mb-1 drop-shadow-md">${item.Tag || "Royal Wedding"}</p>
-                <h3 class="text-xl md:text-2xl font-playfair font-bold mb-1">${highlightedTitle}</h3>
-                <p class="text-royal-ivory/80 font-light text-xs md:text-sm line-clamp-2">${item.Subtitle || "A beautiful exploration of love and traditions."}</p>
-              </div>
-            </div>
-          </a>`;
+          return '<a href="' + (item.RedirectLink || "#contact") + '" class="group block bg-white border border-royal-gold/20 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="' + ((i % 3) * 100) + '">' +
+            '<div class="overflow-hidden aspect-[4/3] relative">' +
+            '<img src="' + getImageUrl(item.ImageLink) + '" loading="lazy" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105 filter sepia-[0.1]" alt="' + item.Title + '">' +
+            '<div class="absolute inset-0 bg-gradient-to-t from-royal-dark/90 via-royal-dark/20 to-transparent opacity-90 group-hover:opacity-70 transition duration-500"></div>' +
+            '<div class="absolute bottom-0 left-0 w-full p-5 text-white z-10">' +
+            '<p class="text-royal-gold font-cinzel text-[10px] font-bold tracking-[0.2em] uppercase mb-1 drop-shadow-md">' + (item.Tag || "Royal Wedding") + '</p>' +
+            '<h3 class="text-xl md:text-2xl font-playfair font-bold mb-1">' + highlightedTitle + '</h3>' +
+            '<p class="text-royal-ivory/80 font-light text-xs md:text-sm line-clamp-2">' + (item.Subtitle || "A beautiful exploration of love and traditions.") + '</p>' +
+            '</div></div></a>';
         }).join("");
       }
 
+      /* ---------- render videos ---------- */
       function renderVideos(items) {
         if (!items.length) return;
-        let vids = items;
+        var vids = items.slice();
         while (vids.length < 8) { vids = vids.concat(items); }
-        const trackHtml = vids.map((item) => {
-          let ytId = item.ImageLink;
-          if (ytId.includes("v=")) ytId = ytId.split("v=")[1].split("&")[0];
+
+        var trackHtml = vids.map(function(item) {
+          var ytId = item.ImageLink;
+          if (ytId.includes("v="))       ytId = ytId.split("v=")[1].split("&")[0];
           else if (ytId.includes("youtu.be/")) ytId = ytId.split("youtu.be/")[1].split("?")[0];
-          return `<a href="#" data-video-id="${ytId}" class="open-video relative video-thumb-container group/vid block overflow-hidden border border-royal-gold/30 transform-gpu">
-            <img src="https://img.youtube.com/vi/${ytId}/maxresdefault.jpg" loading="lazy" class="w-full h-full object-cover transition duration-1000 group-hover/vid:scale-105 filter sepia-[0.2] transform-gpu will-change-transform" alt="Video Thumbnail">
-            <div class="absolute inset-0 bg-royal-dark/30 group-hover/vid:bg-royal-dark/50 transition duration-500 flex items-center justify-center">
-              <div class="w-14 h-14 md:w-20 md:h-20 border border-royal-gold/50 bg-royal-dark/80 rounded-full flex items-center justify-center text-royal-gold backdrop-blur-md shadow-[0_0_20px_rgba(212,175,55,0.4)] transform group-hover/vid:scale-110 transition duration-500">
-                <svg width="22" height="22" class="md:w-[28px] md:h-[28px]" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-              </div>
-            </div>
-          </a>`;
+          return '<a href="#" data-video-id="' + ytId + '" class="open-video relative video-thumb-container group/vid block overflow-hidden border border-royal-gold/30">' +
+            '<img src="https://img.youtube.com/vi/' + ytId + '/maxresdefault.jpg" loading="lazy" class="w-full h-full object-cover transition duration-1000 group-hover/vid:scale-105 filter sepia-[0.2]" alt="Video Thumbnail">' +
+            '<div class="absolute inset-0 bg-royal-dark/30 group-hover/vid:bg-royal-dark/50 transition duration-500 flex items-center justify-center">' +
+            '<div class="w-14 h-14 md:w-20 md:h-20 border border-royal-gold/50 bg-royal-dark/80 rounded-full flex items-center justify-center text-royal-gold backdrop-blur-md shadow-[0_0_20px_rgba(212,175,55,0.4)] transform group-hover/vid:scale-110 transition duration-500">' +
+            '<svg width="22" height="22" class="md:w-[28px] md:h-[28px]" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>' +
+            '</div></div></a>';
         }).join("");
+
         document.getElementById("dynamic-videos").innerHTML = trackHtml + trackHtml;
       }
 
+      /* ---------- init & data loading ---------- */
       function initDynamicContent() {
-        const portfolioSkeletons = Array(8).fill("").map(() => `<div class="skeleton aspect-square border border-royal-gold/10"></div>`).join("");
-        document.getElementById("dynamic-portfolio").innerHTML = portfolioSkeletons;
+        // skeleton loaders
+        document.getElementById("dynamic-portfolio").innerHTML =
+          Array(8).fill('<div class="skeleton aspect-square border border-royal-gold/10"></div>').join("");
 
-        const storySkeletons = Array(3).fill("").map(() => `
-          <div class="skeleton-ivory border border-royal-gold/20 shadow-xl">
-            <div class="aspect-[4/3] skeleton-ivory"></div>
-            <div class="p-5 space-y-3">
-              <div class="skeleton-ivory h-3 w-1/3 rounded"></div>
-              <div class="skeleton-ivory h-5 w-3/4 rounded"></div>
-              <div class="skeleton-ivory h-3 w-full rounded"></div>
-            </div>
-          </div>`).join("");
-        document.getElementById("dynamic-stories").innerHTML = storySkeletons;
+        document.getElementById("dynamic-stories").innerHTML = Array(3).fill(
+          '<div class="skeleton-ivory border border-royal-gold/20 shadow-xl">' +
+          '<div class="aspect-[4/3] skeleton-ivory"></div>' +
+          '<div class="p-5 space-y-3">' +
+          '<div class="skeleton-ivory h-3 w-1/3 rounded"></div>' +
+          '<div class="skeleton-ivory h-5 w-3/4 rounded"></div>' +
+          '<div class="skeleton-ivory h-3 w-full rounded"></div>' +
+          '</div></div>'
+        ).join("");
 
-        const videoSkeletons = Array(6).fill("").map(() => `<div class="skeleton video-thumb-container border border-royal-gold/30 flex-shrink-0"></div>`).join("");
-        document.getElementById("dynamic-videos").innerHTML = videoSkeletons + videoSkeletons;
+        var videoSkel = Array(6).fill('<div class="skeleton video-thumb-container border border-royal-gold/30 flex-shrink-0"></div>').join("");
+        document.getElementById("dynamic-videos").innerHTML = videoSkel + videoSkel;
 
-        if (!GOOGLE_SHEET_CSV_URL || GOOGLE_SHEET_CSV_URL === "") {
+        if (!GOOGLE_SHEET_CSV_URL) {
           processData(defaultData);
         } else {
           Papa.parse(GOOGLE_SHEET_CSV_URL, {
             download: true,
             header: true,
             complete: function(results) { processData(results.data); },
-            error: function() { processData(defaultData); },
+            error:    function()        { processData(defaultData);  },
           });
         }
       }
 
       function processData(data) {
-        let heroItems = data.filter((d) => d.Category && d.Category.toLowerCase().includes("hero"));
-        let portfolioItems = data.filter((d) => d.Category && d.Category.toLowerCase().includes("portfolio"));
-        let videoItems = data.filter((d) => d.Category && d.Category.toLowerCase().includes("video"));
-        let storyItems = data.filter((d) => d.Category && d.Category.toLowerCase().includes("story"));
+        var heroItems      = data.filter(function(d) { return d.Category && d.Category.toLowerCase().includes("hero");      });
+        var portfolioItems = data.filter(function(d) { return d.Category && d.Category.toLowerCase().includes("portfolio"); });
+        var videoItems     = data.filter(function(d) { return d.Category && d.Category.toLowerCase().includes("video");     });
+        var storyItems     = data.filter(function(d) { return d.Category && d.Category.toLowerCase().includes("story");     });
 
-        if (heroItems.length === 0 && portfolioItems.length === 0 && videoItems.length === 0 && storyItems.length === 0) {
-          heroItems = defaultData.filter((d) => d.Category.toLowerCase().includes("hero"));
-          portfolioItems = defaultData.filter((d) => d.Category.toLowerCase().includes("portfolio"));
-          videoItems = defaultData.filter((d) => d.Category.toLowerCase().includes("video"));
-          storyItems = defaultData.filter((d) => d.Category.toLowerCase().includes("story"));
+        if (!heroItems.length && !portfolioItems.length && !videoItems.length && !storyItems.length) {
+          heroItems      = defaultData.filter(function(d) { return d.Category.toLowerCase().includes("hero");      });
+          portfolioItems = defaultData.filter(function(d) { return d.Category.toLowerCase().includes("portfolio"); });
+          videoItems     = defaultData.filter(function(d) { return d.Category.toLowerCase().includes("video");     });
+          storyItems     = defaultData.filter(function(d) { return d.Category.toLowerCase().includes("story");     });
         }
-        if (videoItems.length === 0) videoItems = defaultData.filter((d) => d.Category.toLowerCase().includes("video"));
-        if (storyItems.length === 0) storyItems = defaultData.filter((d) => d.Category.toLowerCase().includes("story"));
+        if (!videoItems.length) videoItems = defaultData.filter(function(d) { return d.Category.toLowerCase().includes("video"); });
+        if (!storyItems.length) storyItems = defaultData.filter(function(d) { return d.Category.toLowerCase().includes("story"); });
 
-        if (heroItems.length) renderHero(heroItems);
+        if (heroItems.length)      renderHero(heroItems);
         if (portfolioItems.length) {
-          globalPortfolioItems = portfolioItems;
+          globalPortfolioItems  = portfolioItems;
           currentPortfolioCount = Math.min(PORTFOLIO_ITEMS_PER_PAGE, globalPortfolioItems.length);
           renderPortfolio(globalPortfolioItems.slice(0, currentPortfolioCount), false);
         }
@@ -899,20 +1021,23 @@
         if (videoItems.length) renderVideos(videoItems);
         AOS.refresh();
 
-        const preloader = document.getElementById("preloader");
+        // dismiss preloader
+        var preloader = document.getElementById("preloader");
         if (preloader) {
-          const heroImgs = Array.from(document.querySelectorAll("#dynamic-hero-marquee img")).slice(0, 3);
-          const loadPromises = heroImgs.map((img) => new Promise((resolve) => {
-            if (img.complete) resolve();
-            else { img.onload = resolve; img.onerror = resolve; }
-          }));
+          var heroImgs = Array.from(document.querySelectorAll("#dynamic-hero-marquee img")).slice(0, 3);
+          var loadPromises = heroImgs.map(function(img) {
+            return new Promise(function(resolve) {
+              if (img.complete) { resolve(); }
+              else { img.onload = resolve; img.onerror = resolve; }
+            });
+          });
           Promise.race([
             Promise.all(loadPromises),
-            new Promise((res) => setTimeout(res, 3500)),
-          ]).then(() => {
-            setTimeout(() => {
+            new Promise(function(res) { setTimeout(res, 3500); })
+          ]).then(function() {
+            setTimeout(function() {
               preloader.classList.add("preloader-hidden");
-              setTimeout(() => preloader.remove(), 1000);
+              setTimeout(function() { preloader.remove(); }, 1000);
             }, 600);
           });
         }
@@ -920,42 +1045,25 @@
 
       initDynamicContent();
 
-      // ===== ANCHOR SCROLL =====
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function(e) {
-          const targetId = this.getAttribute("href");
-          if (targetId === "#") return;
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
-            e.preventDefault();
-            lenis.scrollTo(targetElement, {
-              offset: -65,
-              duration: 1.5,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            });
-          }
-        });
-      });
-
-      // ===== LOAD MORE =====
-      const loadMoreBtn = document.getElementById("portfolio-load-more-btn");
+      /* ---------- load more ---------- */
+      var loadMoreBtn = document.getElementById("portfolio-load-more-btn");
       if (loadMoreBtn) {
-        loadMoreBtn.addEventListener("click", () => {
-          const nextCount = Math.min(currentPortfolioCount + PORTFOLIO_ITEMS_PER_PAGE, globalPortfolioItems.length);
-          const nextItems = globalPortfolioItems.slice(currentPortfolioCount, nextCount);
+        loadMoreBtn.addEventListener("click", function() {
+          var nextCount = Math.min(currentPortfolioCount + PORTFOLIO_ITEMS_PER_PAGE, globalPortfolioItems.length);
+          var nextItems = globalPortfolioItems.slice(currentPortfolioCount, nextCount);
           currentPortfolioCount = nextCount;
           renderPortfolio(nextItems, true);
         });
       }
 
-      // ===== AOS + FEATHER =====
+      /* ---------- AOS + feather ---------- */
       AOS.init({ duration: 1000, easing: "ease-out-cubic", once: true, offset: 50 });
       feather.replace();
 
-      // ===== MOBILE MENU =====
-      const mobileMenuBtn = document.getElementById("mobile-menu-button");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const mobileCloseBtn = document.getElementById("mobile-close-btn");
+      /* ---------- mobile menu ---------- */
+      var mobileMenuBtn  = document.getElementById("mobile-menu-button");
+      var mobileMenu     = document.getElementById("mobile-menu");
+      var mobileCloseBtn = document.getElementById("mobile-close-btn");
 
       function openMobileMenu() {
         mobileMenu.classList.add("menu-open");
@@ -963,7 +1071,6 @@
         lockScroll();
         feather.replace();
       }
-
       function closeMobileMenu() {
         mobileMenu.classList.remove("menu-open");
         mobileMenu.setAttribute("aria-hidden", "true");
@@ -972,17 +1079,16 @@
 
       mobileMenuBtn.addEventListener("click", openMobileMenu);
       mobileCloseBtn.addEventListener("click", closeMobileMenu);
-
-      mobileMenu.querySelectorAll(".mobile-nav-link").forEach((a) => {
-        a.addEventListener("click", () => closeMobileMenu());
+      mobileMenu.querySelectorAll(".mobile-nav-link").forEach(function(a) {
+        a.addEventListener("click", function() { closeMobileMenu(); });
       });
 
-      // ===== NAV SCROLL =====
-      const mainNav = document.getElementById("main-nav");
-      const navLinks = document.querySelectorAll(".nav-link");
-      const sections = document.querySelectorAll("section");
+      /* ---------- nav scroll style ---------- */
+      var mainNav  = document.getElementById("main-nav");
+      var navLinks = document.querySelectorAll(".nav-link");
+      var sections = document.querySelectorAll("section");
 
-      window.addEventListener("scroll", () => {
+      window.addEventListener("scroll", function() {
         if (window.scrollY > 50) {
           mainNav.classList.replace("bg-royal-dark/80", "bg-royal-dark/95");
           mainNav.classList.replace("border-royal-gold/20", "border-royal-gold/50");
@@ -994,120 +1100,117 @@
         }
       }, { passive: true });
 
-      const observerOptions = { root: null, rootMargin: "-20% 0px -70% 0px", threshold: 0 };
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
+      var observerOpts = { root: null, rootMargin: "-20% 0px -70% 0px", threshold: 0 };
+      var sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
           if (entry.isIntersecting) {
-            const currentId = entry.target.getAttribute("id");
-            navLinks.forEach((link) => {
+            var id = entry.target.getAttribute("id");
+            navLinks.forEach(function(link) {
               link.classList.remove("active-nav");
-              if (link.getAttribute("href") === `#${currentId}`) link.classList.add("active-nav");
+              if (link.getAttribute("href") === "#" + id) link.classList.add("active-nav");
             });
           }
         });
-      }, observerOptions);
-      sections.forEach((sec) => observer.observe(sec));
+      }, observerOpts);
+      sections.forEach(function(sec) { sectionObserver.observe(sec); });
 
-      // ===== CONTACT FORM =====
-      const form = document.getElementById("contact-form");
-      const formModal = document.getElementById("success-modal");
-      const submitBtn = form.querySelector('button[type="submit"]');
+      /* ---------- contact form ---------- */
+      var form      = document.getElementById("contact-form");
+      var formModal = document.getElementById("success-modal");
+      var submitBtn = form.querySelector('button[type="submit"]');
 
-      form.addEventListener("submit", (e) => {
+      form.addEventListener("submit", function(e) {
         e.preventDefault();
-        const originalText = submitBtn.textContent;
+        var originalText = submitBtn.textContent;
         submitBtn.textContent = "Sending...";
         submitBtn.disabled = true;
+
         emailjs.sendForm("service_ya9dj4g", "template_b0xj12z", form)
-          .then(() => {
+          .then(function() {
             formModal.classList.remove("hidden");
             formModal.classList.add("flex");
             lockScroll();
             form.reset();
           })
-          .catch((error) => {
+          .catch(function(error) {
             alert("Something went wrong. Please call or WhatsApp us directly.");
             console.error("EmailJS error:", error);
           })
-          .finally(() => {
+          .finally(function() {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
           });
       });
 
-      document.getElementById("close-success-modal").addEventListener("click", () => {
+      document.getElementById("close-success-modal").addEventListener("click", function() {
         formModal.classList.add("hidden");
         formModal.classList.remove("flex");
         unlockScroll();
       });
 
-      // ===== VIDEO MODAL =====
-      const videoModal = document.getElementById("video-modal");
-      const videoIframe = document.getElementById("video-iframe");
-      const closeVideoModalBtn = document.getElementById("close-video-modal");
+      /* ---------- video modal ---------- */
+      var videoModal    = document.getElementById("video-modal");
+      var videoIframe   = document.getElementById("video-iframe");
+      var closeVideoBtn = document.getElementById("close-video-modal");
 
-      function closeVideoModalFn() {
+      function closeVideoModal() {
         videoModal.classList.add("hidden");
         videoModal.classList.remove("flex");
         videoIframe.src = "";
         unlockScroll();
       }
 
-      document.body.addEventListener("click", (e) => {
-        const btn = e.target.closest(".open-video");
+      document.body.addEventListener("click", function(e) {
+        var btn = e.target.closest(".open-video");
         if (!btn) return;
         e.preventDefault();
-        const videoId = btn.getAttribute("data-video-id");
-        videoIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        videoIframe.src = "https://www.youtube.com/embed/" + btn.getAttribute("data-video-id") + "?autoplay=1";
         videoModal.classList.remove("hidden");
         videoModal.classList.add("flex");
         lockScroll();
       });
+      closeVideoBtn.addEventListener("click", closeVideoModal);
+      videoModal.addEventListener("click", function(e) {
+        if (e.target === videoModal) closeVideoModal();
+      });
 
-      closeVideoModalBtn.addEventListener("click", closeVideoModalFn);
-      videoModal.addEventListener("click", (e) => { if (e.target === videoModal) closeVideoModalFn(); });
-
-      // ===== LIGHTBOX CONTROLS =====
+      /* ---------- lightbox controls ---------- */
       document.getElementById("close-image-modal").addEventListener("click", closeLightbox);
 
-      document.getElementById("lightbox-prev").addEventListener("click", () => {
+      document.getElementById("lightbox-prev").addEventListener("click", function() {
         lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
         document.getElementById("lightbox-img").src = lightboxImages[lightboxIndex];
-        document.getElementById("lightbox-counter").textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+        document.getElementById("lightbox-counter").textContent = (lightboxIndex + 1) + " / " + lightboxImages.length;
       });
 
-      document.getElementById("lightbox-next").addEventListener("click", () => {
+      document.getElementById("lightbox-next").addEventListener("click", function() {
         lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
         document.getElementById("lightbox-img").src = lightboxImages[lightboxIndex];
-        document.getElementById("lightbox-counter").textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+        document.getElementById("lightbox-counter").textContent = (lightboxIndex + 1) + " / " + lightboxImages.length;
       });
 
-      document.getElementById("image-modal").addEventListener("click", (e) => {
+      document.getElementById("image-modal").addEventListener("click", function(e) {
         if (e.target === document.getElementById("image-modal")) closeLightbox();
       });
 
-      // ===== SWIPE SUPPORT FOR LIGHTBOX =====
-      let touchStartX = 0;
-      document.getElementById("image-modal").addEventListener("touchstart", (e) => {
+      /* ---------- swipe for lightbox ---------- */
+      var touchStartX = 0;
+      document.getElementById("image-modal").addEventListener("touchstart", function(e) {
         touchStartX = e.changedTouches[0].screenX;
       }, { passive: true });
-      document.getElementById("image-modal").addEventListener("touchend", (e) => {
-        const diff = touchStartX - e.changedTouches[0].screenX;
+      document.getElementById("image-modal").addEventListener("touchend", function(e) {
+        var diff = touchStartX - e.changedTouches[0].screenX;
         if (Math.abs(diff) > 50) {
           if (diff > 0) document.getElementById("lightbox-next").click();
-          else document.getElementById("lightbox-prev").click();
+          else          document.getElementById("lightbox-prev").click();
         }
       }, { passive: true });
 
-      // ===== KEYBOARD =====
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          closeLightbox();
-          closeVideoModalFn();
-          closeMobileMenu();
-        }
-        if (e.key === "ArrowLeft") document.getElementById("lightbox-prev").click();
-        if (e.key === "ArrowRight") document.getElementById("lightbox-next").click();
+      /* ---------- keyboard ---------- */
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape")      { closeLightbox(); closeVideoModal(); closeMobileMenu(); }
+        if (e.key === "ArrowLeft")   { document.getElementById("lightbox-prev").click(); }
+        if (e.key === "ArrowRight")  { document.getElementById("lightbox-next").click(); }
       });
     </script>
   </body>
