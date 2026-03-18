@@ -234,12 +234,20 @@
         }
       }
       @keyframes marqueeLeft {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
       }
       @keyframes marqueeRight {
-        0% { transform: translateX(-50%); }
-        100% { transform: translateX(0); }
+        0% {
+          transform: translateX(-50%);
+        }
+        100% {
+          transform: translateX(0);
+        }
       }
       .marquee-left {
         animation: marqueeLeft 50s linear infinite;
@@ -273,13 +281,24 @@
         animation: float 15s infinite ease-in-out;
       }
       @keyframes float {
-        0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
-        50% { transform: translateY(-100px) translateX(20px); opacity: 0.6; }
+        0%,
+        100% {
+          transform: translateY(0) translateX(0);
+          opacity: 0.2;
+        }
+        50% {
+          transform: translateY(-100px) translateX(20px);
+          opacity: 0.6;
+        }
       }
 
       @keyframes scrollVideoLeft {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
       }
       .animate-scroll-video {
         animation: scrollVideoLeft 30s linear infinite;
@@ -317,13 +336,51 @@
       }
 
       @keyframes loadingBar {
-        0% { width: 0%; left: 0%; }
-        50% { width: 100%; left: 0%; }
-        100% { width: 0%; left: 100%; }
+        0% {
+          width: 0%;
+          left: 0%;
+        }
+        50% {
+          width: 100%;
+          left: 0%;
+        }
+        100% {
+          width: 0%;
+          left: 100%;
+        }
       }
       .preloader-hidden {
         opacity: 0;
         visibility: hidden;
+      }
+      /* Skeleton Loaders */
+      @keyframes shimmer {
+        0% {
+          background-position: -1000px 0;
+        }
+        100% {
+          background-position: 1000px 0;
+        }
+      }
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.05) 25%,
+          rgba(255, 255, 255, 0.12) 50%,
+          rgba(255, 255, 255, 0.05) 75%
+        );
+        background-size: 1000px 100%;
+        animation: shimmer 2s infinite linear;
+      }
+      .skeleton-ivory {
+        background: linear-gradient(
+          90deg,
+          rgba(212, 175, 55, 0.05) 25%,
+          rgba(212, 175, 55, 0.12) 50%,
+          rgba(212, 175, 55, 0.05) 75%
+        );
+        background-size: 1000px 100%;
+        animation: shimmer 2s infinite linear;
       }
     </style>
     <script
@@ -341,7 +398,9 @@
       class="fixed inset-0 z-[9999] bg-royal-maroon flex flex-col items-center justify-center transition-all duration-700 ease-in-out"
     >
       <div class="relative w-32 h-32 flex items-center justify-center">
-        <div class="absolute inset-0 border-t-2 border-b-2 border-royal-gold rounded-full animate-spin"></div>
+        <div
+          class="absolute inset-0 border-t-2 border-b-2 border-royal-gold rounded-full animate-spin"
+        ></div>
         <div
           class="absolute inset-2 border-r-2 border-l-2 border-royal-ivory rounded-full animate-spin shadow-[0_0_20px_rgba(212,175,55,0.4)]"
           style="animation-direction: reverse; animation-duration: 2s"
@@ -350,11 +409,15 @@
           <span class="font-cinzel text-royal-gold text-3xl font-bold">S</span>
         </div>
       </div>
-      <div class="mt-8 text-royal-gold font-cinzel tracking-[0.3em] uppercase text-sm animate-pulse text-center px-4">
+      <div
+        class="mt-8 text-royal-gold font-cinzel tracking-[0.3em] uppercase text-sm animate-pulse text-center px-4"
+      >
         Preparing Royal Gallery
       </div>
       <div class="w-48 h-px bg-royal-maroonDark mt-4 relative overflow-hidden">
-        <div class="absolute top-0 left-0 h-full bg-royal-gold animate-[loadingBar_2s_ease-in-out_infinite]"></div>
+        <div
+          class="absolute top-0 left-0 h-full bg-royal-gold animate-[loadingBar_2s_ease-in-out_infinite]"
+        ></div>
       </div>
     </div>
 
@@ -367,9 +430,21 @@
         <!-- Desktop Layout -->
         <div class="hidden lg:flex justify-between items-center h-24">
           <div class="flex space-x-6 w-1/3 justify-end items-center">
-            <a href="#home" class="nav-link active-nav text-xs font-medium uppercase tracking-[0.15em]">Home</a>
-            <a href="#about" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">About</a>
-            <a href="#portfolio" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Gallery</a>
+            <a
+              href="#home"
+              class="nav-link active-nav text-xs font-medium uppercase tracking-[0.15em]"
+              >Home</a
+            >
+            <a
+              href="#about"
+              class="nav-link text-xs font-medium uppercase tracking-[0.15em]"
+              >About</a
+            >
+            <a
+              href="#portfolio"
+              class="nav-link text-xs font-medium uppercase tracking-[0.15em]"
+              >Gallery</a
+            >
           </div>
 
           <div class="w-1/3 flex justify-center text-center">
@@ -380,15 +455,34 @@
               >
                 SWAPNACHARON
               </span>
-              <span class="text-[9px] tracking-[0.3em] uppercase text-royal-ivory mt-1 opacity-80">Photography</span>
+              <span
+                class="text-[9px] tracking-[0.3em] uppercase text-royal-ivory mt-1 opacity-80"
+                >Photography</span
+              >
             </a>
           </div>
 
           <div class="flex space-x-6 w-1/3 justify-start items-center">
-            <a href="#videos" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Films</a>
-            <a href="#stories" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Stories</a>
-            <a href="#packages" class="nav-link text-xs font-medium uppercase tracking-[0.15em]">Packages</a>
-            <a href="#contact" class="nav-link text-xs font-medium uppercase tracking-[0.15em] text-royal-gold">Contact</a>
+            <a
+              href="#videos"
+              class="nav-link text-xs font-medium uppercase tracking-[0.15em]"
+              >Films</a
+            >
+            <a
+              href="#stories"
+              class="nav-link text-xs font-medium uppercase tracking-[0.15em]"
+              >Stories</a
+            >
+            <a
+              href="#packages"
+              class="nav-link text-xs font-medium uppercase tracking-[0.15em]"
+              >Packages</a
+            >
+            <a
+              href="#contact"
+              class="nav-link text-xs font-medium uppercase tracking-[0.15em] text-royal-gold"
+              >Contact</a
+            >
           </div>
         </div>
 
@@ -396,11 +490,17 @@
         <div class="lg:hidden flex justify-between items-center h-20">
           <div class="flex items-center">
             <a href="#" class="flex flex-col">
-              <span class="text-xl font-bold font-cinzel tracking-widest uppercase text-royal-gold">SWAPNACHARON</span>
+              <span
+                class="text-xl font-bold font-cinzel tracking-widest uppercase text-royal-gold"
+                >SWAPNACHARON</span
+              >
             </a>
           </div>
           <div>
-            <button id="mobile-menu-button" class="focus:outline-none hover:text-royal-gold transition">
+            <button
+              id="mobile-menu-button"
+              class="focus:outline-none hover:text-royal-gold transition"
+            >
               <i data-feather="menu"></i>
             </button>
           </div>
@@ -413,13 +513,41 @@
         class="hidden lg:hidden bg-royal-dark text-royal-ivory border-t border-royal-gold/20 absolute w-full shadow-2xl h-[100dvh] overflow-y-auto pb-24 z-40"
       >
         <div class="px-4 py-4 space-y-2">
-          <a href="#home" class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold">Home</a>
-          <a href="#about" class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold">About</a>
-          <a href="#portfolio" class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold">Gallery</a>
-          <a href="#videos" class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold">Films</a>
-          <a href="#stories" class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold">Stories</a>
-          <a href="#packages" class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold">Packages</a>
-          <a href="#contact" class="block px-3 py-3 text-sm font-medium uppercase tracking-widest text-royal-gold">Contact</a>
+          <a
+            href="#home"
+            class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold"
+            >Home</a
+          >
+          <a
+            href="#about"
+            class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold"
+            >About</a
+          >
+          <a
+            href="#portfolio"
+            class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold"
+            >Gallery</a
+          >
+          <a
+            href="#videos"
+            class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold"
+            >Films</a
+          >
+          <a
+            href="#stories"
+            class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold"
+            >Stories</a
+          >
+          <a
+            href="#packages"
+            class="block px-3 py-3 text-sm font-medium uppercase tracking-widest border-b border-white/5 hover:text-royal-gold"
+            >Packages</a
+          >
+          <a
+            href="#contact"
+            class="block px-3 py-3 text-sm font-medium uppercase tracking-widest text-royal-gold"
+            >Contact</a
+          >
         </div>
       </div>
     </nav>
@@ -430,44 +558,95 @@
       target="_blank"
       class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-2xl transition-all duration-300 flex items-center justify-center group"
     >
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" class="w-7 h-7">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+      <svg
+        viewBox="0 0 24 24"
+        width="28"
+        height="28"
+        fill="currentColor"
+        class="w-7 h-7"
+      >
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"
+        />
       </svg>
     </a>
 
     <!-- Fullscreen Blurred Hero Section -->
-    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-royal-dark">
-      <div id="dynamic-hero-marquee" class="hero-marquee-wrapper transform scale-110"></div>
+    <section
+      id="home"
+      class="relative h-screen flex items-center justify-center overflow-hidden bg-royal-dark"
+    >
+      <div
+        id="dynamic-hero-marquee"
+        class="hero-marquee-wrapper transform scale-110"
+      ></div>
       <div class="absolute inset-0 hero-overlay z-10 pointer-events-none"></div>
       <div class="particles-container">
-        <div class="particle w-12 h-12 left-[10%] top-[80%]" style="animation-delay: 0s"></div>
-        <div class="particle w-20 h-20 left-[80%] top-[70%]" style="animation-delay: 2s"></div>
-        <div class="particle w-8 h-8 left-[30%] top-[40%]" style="animation-delay: 4s"></div>
-        <div class="particle w-16 h-16 left-[70%] top-[20%]" style="animation-delay: 1s"></div>
-        <div class="particle w-24 h-24 left-[50%] top-[90%]" style="animation-delay: 5s"></div>
+        <div
+          class="particle w-12 h-12 left-[10%] top-[80%]"
+          style="animation-delay: 0s"
+        ></div>
+        <div
+          class="particle w-20 h-20 left-[80%] top-[70%]"
+          style="animation-delay: 2s"
+        ></div>
+        <div
+          class="particle w-8 h-8 left-[30%] top-[40%]"
+          style="animation-delay: 4s"
+        ></div>
+        <div
+          class="particle w-16 h-16 left-[70%] top-[20%]"
+          style="animation-delay: 1s"
+        ></div>
+        <div
+          class="particle w-24 h-24 left-[50%] top-[90%]"
+          style="animation-delay: 5s"
+        ></div>
       </div>
 
-      <div class="relative z-20 text-center px-4 mt-16 max-w-5xl mx-auto" data-aos="zoom-in" data-aos-duration="1500">
-        <p class="text-royal-gold font-cinzel font-semibold tracking-[0.4em] uppercase text-sm md:text-base mb-6 drop-shadow-lg">
+      <div
+        class="relative z-20 text-center px-4 mt-16 max-w-5xl mx-auto"
+        data-aos="zoom-in"
+        data-aos-duration="1500"
+      >
+        <p
+          class="text-royal-gold font-cinzel font-semibold tracking-[0.4em] uppercase text-sm md:text-base mb-6 drop-shadow-lg"
+        >
           Swapnacharon Photography
         </p>
-        <h1 class="text-4xl md:text-7xl font-bold mb-8 font-playfair text-white leading-tight drop-shadow-2xl">
+        <h1
+          class="text-4xl md:text-7xl font-bold mb-8 font-playfair text-white leading-tight drop-shadow-2xl"
+        >
           Capturing Timeless <br />
-          <span class="italic font-light gold-text-gradient">Royal Moments</span>
+          <span class="italic font-light gold-text-gradient"
+            >Royal Moments</span
+          >
         </h1>
-        <p class="text-royal-ivory/80 text-sm md:text-lg mb-12 font-light tracking-wide max-w-2xl mx-auto">
-          Immersive storytelling and cinematic visuals that preserve the majestic essence and emotional depth of your grand celebration.
+        <p
+          class="text-royal-ivory/80 text-sm md:text-lg mb-12 font-light tracking-wide max-w-2xl mx-auto"
+        >
+          Immersive storytelling and cinematic visuals that preserve the
+          majestic essence and emotional depth of your grand celebration.
         </p>
         <div class="flex justify-center">
-          <a href="#packages" class="px-10 py-4 border border-royal-gold text-royal-gold text-sm font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition-all duration-500 shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+          <a
+            href="#packages"
+            class="px-10 py-4 border border-royal-gold text-royal-gold text-sm font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition-all duration-500 shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+          >
             View Packages
           </a>
         </div>
       </div>
 
-      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-80">
-        <span class="text-royal-gold text-[10px] tracking-widest uppercase mb-2">Scroll</span>
-        <div class="w-px h-12 bg-gradient-to-b from-royal-gold to-transparent"></div>
+      <div
+        class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-80"
+      >
+        <span class="text-royal-gold text-[10px] tracking-widest uppercase mb-2"
+          >Scroll</span
+        >
+        <div
+          class="w-px h-12 bg-gradient-to-b from-royal-gold to-transparent"
+        ></div>
       </div>
     </section>
 
@@ -475,42 +654,100 @@
     <section id="about" class="py-20 lg:py-32 bg-mandala">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-          <div class="lg:w-1/2 relative w-full" data-aos="fade-right" data-aos-duration="1200">
-            <div class="absolute -inset-4 border border-royal-gold/40 transform translate-x-4 translate-y-4 hidden md:block"></div>
-            <div class="relative p-4 bg-white/50 backdrop-blur-sm border border-royal-gold/20 shadow-xl">
-              <img src="public/images/client.jpg" alt="Dip Das - Photographer" class="w-full h-auto max-h-[500px] lg:max-h-[700px] object-cover filter sepia-[0.1]" />
+          <div
+            class="lg:w-1/2 relative w-full"
+            data-aos="fade-right"
+            data-aos-duration="1200"
+          >
+            <div
+              class="absolute -inset-4 border border-royal-gold/40 transform translate-x-4 translate-y-4 hidden md:block"
+            ></div>
+            <div
+              class="relative p-4 bg-white/50 backdrop-blur-sm border border-royal-gold/20 shadow-xl"
+            >
+              <img
+                src="public/images/client.jpg"
+                alt="Dip Das - Photographer"
+                class="w-full h-auto max-h-[500px] lg:max-h-[700px] object-cover filter sepia-[0.1]"
+              />
             </div>
           </div>
 
-          <div class="lg:w-1/2 w-full" data-aos="fade-left" data-aos-duration="1200">
+          <div
+            class="lg:w-1/2 w-full"
+            data-aos="fade-left"
+            data-aos-duration="1200"
+          >
             <div class="flex items-center mb-4">
               <div class="h-px w-12 bg-royal-gold mr-4"></div>
-              <p class="text-royal-maroon font-cinzel font-bold tracking-[0.2em] uppercase text-xs">The Artist</p>
+              <p
+                class="text-royal-maroon font-cinzel font-bold tracking-[0.2em] uppercase text-xs"
+              >
+                The Artist
+              </p>
             </div>
-            <h2 class="text-3xl md:text-5xl font-bold font-playfair text-royal-dark mb-6 lg:mb-8 leading-tight">
-              Hello, I'm <br /><span class="italic text-royal-maroon">Dip Das</span>
+            <h2
+              class="text-3xl md:text-5xl font-bold font-playfair text-royal-dark mb-6 lg:mb-8 leading-tight"
+            >
+              Hello, I'm <br /><span class="italic text-royal-maroon"
+                >Dip Das</span
+              >
             </h2>
-            <p class="text-gray-700 mb-6 font-light leading-relaxed text-base lg:text-lg">
-              Based in Howrah, West Bengal, I am the lead photographer and videographer behind <strong>Swapnacharon</strong>. With over 2 years of dedicated professional experience, my passion lies in capturing authentic moments that tell compelling, beautiful stories.
+            <p
+              class="text-gray-700 mb-6 font-light leading-relaxed text-base lg:text-lg"
+            >
+              Based in Howrah, West Bengal, I am the lead photographer and
+              videographer behind <strong>Swapnacharon</strong>. With over 2
+              years of dedicated professional experience, my passion lies in
+              capturing authentic moments that tell compelling, beautiful
+              stories.
             </p>
-            <p class="text-gray-700 mb-8 lg:mb-10 font-light leading-relaxed text-base lg:text-lg">
-              My approach blends technical expertise with a creative, artistic vision. Whether it's a traditional Bengali wedding, an intimate portrait session, or a commercial project, my goal is to deliver exceptional, timeless imagery that resonates emotionally and exceeds your expectations.
+            <p
+              class="text-gray-700 mb-8 lg:mb-10 font-light leading-relaxed text-base lg:text-lg"
+            >
+              My approach blends technical expertise with a creative, artistic
+              vision. Whether it's a traditional Bengali wedding, an intimate
+              portrait session, or a commercial project, my goal is to deliver
+              exceptional, timeless imagery that resonates emotionally and
+              exceeds your expectations.
             </p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 sm:gap-y-8 gap-x-6 border-t border-royal-gold/30 pt-8">
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 sm:gap-y-8 gap-x-6 border-t border-royal-gold/30 pt-8"
+            >
               <div>
-                <h4 class="text-royal-maroon font-cinzel font-bold mb-1 lg:mb-2">Based In</h4>
-                <p class="text-gray-600 text-sm font-light">Howrah, West Bengal</p>
+                <h4
+                  class="text-royal-maroon font-cinzel font-bold mb-1 lg:mb-2"
+                >
+                  Based In
+                </h4>
+                <p class="text-gray-600 text-sm font-light">
+                  Howrah, West Bengal
+                </p>
               </div>
               <div>
-                <h4 class="text-royal-maroon font-cinzel font-bold mb-1 lg:mb-2">Availability</h4>
+                <h4
+                  class="text-royal-maroon font-cinzel font-bold mb-1 lg:mb-2"
+                >
+                  Availability
+                </h4>
                 <p class="text-gray-600 text-sm font-light">Nationwide</p>
               </div>
               <div>
-                <h4 class="text-royal-maroon font-cinzel font-bold mb-1 lg:mb-2">Experience</h4>
-                <p class="text-gray-600 text-sm font-light">2+ Years Professional</p>
+                <h4
+                  class="text-royal-maroon font-cinzel font-bold mb-1 lg:mb-2"
+                >
+                  Experience
+                </h4>
+                <p class="text-gray-600 text-sm font-light">
+                  2+ Years Professional
+                </p>
               </div>
               <div>
-                <h4 class="text-royal-maroon font-cinzel font-bold mb-1 lg:mb-2">Bookings</h4>
+                <h4
+                  class="text-royal-maroon font-cinzel font-bold mb-1 lg:mb-2"
+                >
+                  Bookings
+                </h4>
                 <p class="text-gray-600 text-sm font-light">Open</p>
               </div>
             </div>
@@ -521,24 +758,53 @@
 
     <!-- Gallery / Portfolio Section -->
     <section id="portfolio" class="py-20 lg:py-32 bg-royal-dark relative">
-      <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-royal-gold to-transparent opacity-50"></div>
+      <div
+        class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-royal-gold to-transparent opacity-50"
+      ></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12 lg:mb-16" data-aos="fade-up">
-          <p class="text-royal-gold font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">The Royal Gallery</p>
-          <h2 class="text-3xl md:text-5xl font-bold font-playfair text-royal-ivory">
+          <p
+            class="text-royal-gold font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3"
+          >
+            The Royal Gallery
+          </p>
+          <h2
+            class="text-3xl md:text-5xl font-bold font-playfair text-royal-ivory"
+          >
             A Visual <span class="italic text-royal-gold">Masterpiece</span>
           </h2>
           <div class="flex justify-center mt-6">
-            <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 10H20M40 10H60M30 0L20 10L30 20L40 10L30 0Z" fill="#D4AF37"/>
+            <svg
+              width="60"
+              height="20"
+              viewBox="0 0 60 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 10H20M40 10H60M30 0L20 10L30 20L40 10L30 0Z"
+                fill="#D4AF37"
+              />
             </svg>
           </div>
         </div>
 
-        <div id="dynamic-portfolio" class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mt-8 lg:mt-10" data-aos="fade-up" data-aos-delay="200"></div>
+        <div
+          id="dynamic-portfolio"
+          class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mt-8 lg:mt-10"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        ></div>
 
-        <div id="portfolio-load-more-container" class="text-center mt-12 lg:mt-16 hidden" data-aos="fade-up">
-          <button id="portfolio-load-more-btn" class="px-8 lg:px-10 py-3 lg:py-4 border border-royal-gold text-royal-gold text-xs lg:text-sm font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-500">
+        <div
+          id="portfolio-load-more-container"
+          class="text-center mt-12 lg:mt-16 hidden"
+          data-aos="fade-up"
+        >
+          <button
+            id="portfolio-load-more-btn"
+            class="px-8 lg:px-10 py-3 lg:py-4 border border-royal-gold text-royal-gold text-xs lg:text-sm font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-500"
+          >
             View More Masterpieces
           </button>
         </div>
@@ -546,12 +812,23 @@
     </section>
 
     <!-- Videos Section -->
-    <section id="videos" class="py-20 lg:py-32 bg-royal-maroonDark relative overflow-hidden border-b border-royal-gold/20 border-t border-royal-gold/20">
-      <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30"></div>
+    <section
+      id="videos"
+      class="py-20 lg:py-32 bg-royal-maroonDark relative overflow-hidden border-b border-royal-gold/20 border-t border-royal-gold/20"
+    >
+      <div
+        class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30"
+      ></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-12 lg:mb-16" data-aos="fade-up">
-          <p class="text-royal-gold font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">Cinematography</p>
-          <h2 class="text-3xl md:text-5xl font-bold font-playfair text-royal-ivory">
+          <p
+            class="text-royal-gold font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3"
+          >
+            Cinematography
+          </p>
+          <h2
+            class="text-3xl md:text-5xl font-bold font-playfair text-royal-ivory"
+          >
             Epic Wedding <span class="italic text-royal-gold">Films</span>
           </h2>
           <div class="flex justify-center mt-6">
@@ -559,191 +836,549 @@
           </div>
         </div>
       </div>
-      <div class="w-full group relative z-10" data-aos="fade-up" data-aos-delay="200">
-        <div id="dynamic-videos" class="flex animate-scroll-video pause-animation w-max gap-4 lg:gap-6 px-4"></div>
+      <div
+        class="w-full group relative z-10"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        <div
+          id="dynamic-videos"
+          class="flex animate-scroll-video pause-animation w-max gap-4 lg:gap-6 px-4"
+        ></div>
       </div>
     </section>
 
     <!-- Featured Stories Section -->
-    <section id="stories" class="py-20 lg:py-32 bg-mandala border-b border-royal-gold/20">
+    <section
+      id="stories"
+      class="py-20 lg:py-32 bg-mandala border-b border-royal-gold/20"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 lg:mb-16 text-center md:text-left" data-aos="fade-up">
+        <div
+          class="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 lg:mb-16 text-center md:text-left"
+          data-aos="fade-up"
+        >
           <div class="mb-6 md:mb-0">
-            <p class="text-royal-maroon font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">Real Weddings</p>
-            <h2 class="text-3xl md:text-5xl font-bold font-playfair text-royal-dark">
+            <p
+              class="text-royal-maroon font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3"
+            >
+              Real Weddings
+            </p>
+            <h2
+              class="text-3xl md:text-5xl font-bold font-playfair text-royal-dark"
+            >
               Featured <span class="italic text-royal-maroon">Stories</span>
             </h2>
-            <div class="w-24 h-px bg-royal-gold mt-4 lg:mt-6 mx-auto md:mx-0"></div>
+            <div
+              class="w-24 h-px bg-royal-gold mt-4 lg:mt-6 mx-auto md:mx-0"
+            ></div>
           </div>
-          <a href="#contact" class="inline-block pb-1 border-b border-royal-gold text-royal-maroon text-xs font-bold tracking-widest uppercase hover:text-royal-gold transition duration-300">
+          <a
+            href="#contact"
+            class="inline-block pb-1 border-b border-royal-gold text-royal-maroon text-xs font-bold tracking-widest uppercase hover:text-royal-gold transition duration-300"
+          >
             Book Your Story
           </a>
         </div>
-        <div id="dynamic-stories" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-12"></div>
+        <div
+          id="dynamic-stories"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-12"
+        ></div>
       </div>
     </section>
 
     <!-- Premium Packages Section -->
-    <section id="packages" class="py-20 lg:py-32 bg-royal-dark relative overflow-hidden">
-      <div class="absolute top-0 left-0 w-96 h-96 bg-royal-maroon/30 rounded-full blur-[100px] pointer-events-none hidden md:block"></div>
-      <div class="absolute bottom-0 right-0 w-96 h-96 bg-royal-gold/10 rounded-full blur-[100px] pointer-events-none hidden md:block"></div>
+    <section
+      id="packages"
+      class="py-20 lg:py-32 bg-royal-dark relative overflow-hidden"
+    >
+      <div
+        class="absolute top-0 left-0 w-96 h-96 bg-royal-maroon/30 rounded-full blur-[100px] pointer-events-none hidden md:block"
+      ></div>
+      <div
+        class="absolute bottom-0 right-0 w-96 h-96 bg-royal-gold/10 rounded-full blur-[100px] pointer-events-none hidden md:block"
+      ></div>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-16 lg:mb-20" data-aos="fade-up">
-          <p class="text-royal-gold font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">Investment</p>
+          <p
+            class="text-royal-gold font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3"
+          >
+            Investment
+          </p>
           <h2 class="text-3xl md:text-5xl font-bold font-playfair text-white">
             Premium Wedding <span class="italic text-royal-gold">Packages</span>
           </h2>
           <div class="flex justify-center mt-6 mb-6">
-            <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 10H20M40 10H60M30 0L20 10L30 20L40 10L30 0Z" fill="#D4AF37"/>
+            <svg
+              width="60"
+              height="20"
+              viewBox="0 0 60 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 10H20M40 10H60M30 0L20 10L30 20L40 10L30 0Z"
+                fill="#D4AF37"
+              />
             </svg>
           </div>
-          <p class="text-gray-400 max-w-2xl mx-auto font-light text-base lg:text-lg">
-            Tailored collections designed to provide a rich, comprehensive, and cinematic documentation of your magnificent day.
+          <p
+            class="text-gray-400 max-w-2xl mx-auto font-light text-base lg:text-lg"
+          >
+            Tailored collections designed to provide a rich, comprehensive, and
+            cinematic documentation of your magnificent day.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center lg:px-4">
           <!-- Package 1: Basic -->
-          <div class="glass-card rounded-lg p-6 lg:p-10 text-center transition-all duration-500 hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="0">
-            <h3 class="text-xl lg:text-2xl font-cinzel font-bold text-white mb-2">Basic</h3>
-            <p class="text-royal-gold/80 font-light text-[10px] lg:text-xs tracking-widest uppercase mb-6 lg:mb-8 border-b border-royal-gold/20 pb-4 lg:pb-6">Intimate Coverage</p>
-            <div class="text-3xl lg:text-4xl font-bold text-white mb-8 lg:mb-10 font-playfair">
+          <div
+            class="glass-card rounded-lg p-6 lg:p-10 text-center transition-all duration-500 hover:-translate-y-2 relative"
+            data-aos="fade-up"
+            data-aos-delay="0"
+          >
+            <h3
+              class="text-xl lg:text-2xl font-cinzel font-bold text-white mb-2"
+            >
+              Basic
+            </h3>
+            <p
+              class="text-royal-gold/80 font-light text-[10px] lg:text-xs tracking-widest uppercase mb-6 lg:mb-8 border-b border-royal-gold/20 pb-4 lg:pb-6"
+            >
+              Intimate Coverage
+            </p>
+            <div
+              class="text-3xl lg:text-4xl font-bold text-white mb-8 lg:mb-10 font-playfair"
+            >
               <span class="text-xl lg:text-2xl align-top">₹</span>49,999
             </div>
-            <ul class="text-gray-300 font-light text-xs lg:text-sm space-y-4 lg:space-y-5 mb-8 lg:mb-10 text-left">
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>Both side photo & video coverage</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>All raw photos via drive/pendrive</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>2 basic albums (12x36)</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>3 days coverage</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>Pre-wedding photography (your loc.)</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>Trailer video (3m 30s+)</span></li>
+            <ul
+              class="text-gray-300 font-light text-xs lg:text-sm space-y-4 lg:space-y-5 mb-8 lg:mb-10 text-left"
+            >
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Both side photo & video coverage</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>All raw photos via drive/pendrive</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>2 basic albums (12x36)</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>3 days coverage</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Pre-wedding photography (your loc.)</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Trailer video (3m 30s+)</span>
+              </li>
             </ul>
-            <a href="#contact" class="inline-block w-full py-3 lg:py-4 border border-royal-gold/50 text-royal-gold font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-300 text-[10px] lg:text-xs">Inquire Now</a>
+            <a
+              href="#contact"
+              class="inline-block w-full py-3 lg:py-4 border border-royal-gold/50 text-royal-gold font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-300 text-[10px] lg:text-xs"
+              >Inquire Now</a
+            >
           </div>
 
           <!-- Package 2: Standard -->
-          <div class="glass-card rounded-lg p-6 lg:p-10 text-center transition-all duration-500 hover:-translate-y-2 relative border-royal-gold/60 shadow-[0_0_30px_rgba(212,175,55,0.15)] bg-gradient-to-b from-white/5 to-royal-maroon/20" data-aos="fade-up" data-aos-delay="100">
-            <div class="absolute -top-3 lg:-top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-royal-gold to-[#fff3b0] text-royal-dark px-4 lg:px-6 py-1 lg:py-1.5 text-[9px] lg:text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm shadow-[0_0_15px_rgba(212,175,55,0.6)] whitespace-nowrap">
+          <div
+            class="glass-card rounded-lg p-6 lg:p-10 text-center transition-all duration-500 hover:-translate-y-2 relative border-royal-gold/60 shadow-[0_0_30px_rgba(212,175,55,0.15)] bg-gradient-to-b from-white/5 to-royal-maroon/20"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div
+              class="absolute -top-3 lg:-top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-royal-gold to-[#fff3b0] text-royal-dark px-4 lg:px-6 py-1 lg:py-1.5 text-[9px] lg:text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm shadow-[0_0_15px_rgba(212,175,55,0.6)] whitespace-nowrap"
+            >
               Best Seller
             </div>
-            <h3 class="text-2xl lg:text-3xl font-cinzel font-bold text-white mb-2 mt-4">Standard</h3>
-            <p class="text-royal-gold/80 font-light text-[10px] lg:text-xs tracking-widest uppercase mb-6 lg:mb-8 border-b border-royal-gold/30 pb-4 lg:pb-6">The Perfect Blend</p>
-            <div class="text-4xl lg:text-5xl font-bold text-white mb-8 lg:mb-10 font-playfair drop-shadow-md">
+            <h3
+              class="text-2xl lg:text-3xl font-cinzel font-bold text-white mb-2 mt-4"
+            >
+              Standard
+            </h3>
+            <p
+              class="text-royal-gold/80 font-light text-[10px] lg:text-xs tracking-widest uppercase mb-6 lg:mb-8 border-b border-royal-gold/30 pb-4 lg:pb-6"
+            >
+              The Perfect Blend
+            </p>
+            <div
+              class="text-4xl lg:text-5xl font-bold text-white mb-8 lg:mb-10 font-playfair drop-shadow-md"
+            >
               <span class="text-xl lg:text-2xl align-top">₹</span>89,999
             </div>
-            <ul class="text-gray-200 font-light text-xs lg:text-sm space-y-4 lg:space-y-5 mb-8 lg:mb-10 text-left">
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>4 days coverage both sides</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>Pre-wed photo + video (5m, 2 loc.)</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>64GB pendrive + all raw photos</span></li>
-              <li class="flex items-start"><i data-feather="check" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>High-resolution photos</span></li>
-              <li class="flex items-start"><i data-feather="check" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>Online gallery</span></li>
-              <li class="flex items-start"><i data-feather="star" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0 fill-royal-gold"></i><span class="font-medium text-white">2 premium albums + table calendar</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>Drone shots (pre-wed, haldi, wed)</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"></i><span>3 cinematic reels</span></li>
+            <ul
+              class="text-gray-200 font-light text-xs lg:text-sm space-y-4 lg:space-y-5 mb-8 lg:mb-10 text-left"
+            >
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>4 days coverage both sides</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Pre-wed photo + video (5m, 2 loc.)</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>64GB pendrive + all raw photos</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>High-resolution photos</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Online gallery</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="star"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0 fill-royal-gold"
+                ></i
+                ><span class="font-medium text-white"
+                  >2 premium albums + table calendar</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Drone shots (pre-wed, haldi, wed)</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 lg:mr-4 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>3 cinematic reels</span>
+              </li>
             </ul>
-            <a href="#contact" class="inline-block w-full py-3 lg:py-4 bg-gradient-to-r from-royal-gold to-[#c5a028] text-royal-dark font-bold tracking-widest uppercase hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition duration-300 text-[10px] lg:text-xs">Secure Your Date</a>
+            <a
+              href="#contact"
+              class="inline-block w-full py-3 lg:py-4 bg-gradient-to-r from-royal-gold to-[#c5a028] text-royal-dark font-bold tracking-widest uppercase hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition duration-300 text-[10px] lg:text-xs"
+              >Secure Your Date</a
+            >
           </div>
 
           <!-- Package 3: Premium -->
-          <div class="glass-card rounded-lg p-6 lg:p-10 text-center transition-all duration-500 hover:-translate-y-2 relative border-royal-gold/40 transform lg:scale-105 z-10 bg-royal-maroonDark/40" data-aos="fade-up" data-aos-delay="200">
-            <div class="absolute -top-3 lg:-top-4 left-1/2 transform -translate-x-1/2 border border-royal-gold bg-royal-dark text-royal-gold px-4 lg:px-6 py-1 lg:py-1.5 text-[9px] lg:text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm whitespace-nowrap">
+          <div
+            class="glass-card rounded-lg p-6 lg:p-10 text-center transition-all duration-500 hover:-translate-y-2 relative border-royal-gold/40 transform lg:scale-105 z-10 bg-royal-maroonDark/40"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div
+              class="absolute -top-3 lg:-top-4 left-1/2 transform -translate-x-1/2 border border-royal-gold bg-royal-dark text-royal-gold px-4 lg:px-6 py-1 lg:py-1.5 text-[9px] lg:text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm whitespace-nowrap"
+            >
               Luxury
             </div>
-            <h3 class="text-xl lg:text-2xl font-cinzel font-bold text-white mb-2 mt-2">Premium</h3>
-            <p class="text-royal-gold/80 font-light text-[10px] lg:text-xs tracking-widest uppercase mb-6 lg:mb-8 border-b border-royal-gold/20 pb-4 lg:pb-6">The Grand Experience</p>
-            <div class="text-3xl lg:text-4xl font-bold text-white mb-8 lg:mb-10 font-playfair">
+            <h3
+              class="text-xl lg:text-2xl font-cinzel font-bold text-white mb-2 mt-2"
+            >
+              Premium
+            </h3>
+            <p
+              class="text-royal-gold/80 font-light text-[10px] lg:text-xs tracking-widest uppercase mb-6 lg:mb-8 border-b border-royal-gold/20 pb-4 lg:pb-6"
+            >
+              The Grand Experience
+            </p>
+            <div
+              class="text-3xl lg:text-4xl font-bold text-white mb-8 lg:mb-10 font-playfair"
+            >
               <span class="text-xl lg:text-2xl align-top">₹</span>1,19,999
             </div>
-            <ul class="text-gray-300 font-light text-xs lg:text-sm space-y-4 lg:space-y-4 mb-8 lg:mb-10 text-left">
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>4 days coverage both sides</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Pre-wed photo + video (teaser incl)</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>128GB pendrive (all raw files)</span></li>
-              <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>High-resolution photos & Gallery</span></li>
-              <li class="flex items-start"><i data-feather="star" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0 fill-royal-gold"></i><span class="font-medium text-white">2 premium albums + calendar + gift</span></li>
-              <li class="flex items-start"><i data-feather="camera" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Drone coverage (all major events)</span></li>
-              <li class="flex items-start"><i data-feather="film" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Wedding teaser (5 min)</span></li>
-              <li class="flex items-start"><i data-feather="video" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Full cinematic video (1 hr 5m+)</span></li>
-              <li class="flex items-start"><i data-feather="image" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Invitation e-card video</span></li>
-              <li class="flex items-start"><i data-feather="instagram" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>5 cinematic reels</span></li>
+            <ul
+              class="text-gray-300 font-light text-xs lg:text-sm space-y-4 lg:space-y-4 mb-8 lg:mb-10 text-left"
+            >
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>4 days coverage both sides</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Pre-wed photo + video (teaser incl)</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>128GB pendrive (all raw files)</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="check-circle"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>High-resolution photos & Gallery</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="star"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0 fill-royal-gold"
+                ></i
+                ><span class="font-medium text-white"
+                  >2 premium albums + calendar + gift</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="camera"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Drone coverage (all major events)</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="film"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Wedding teaser (5 min)</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="video"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Full cinematic video (1 hr 5m+)</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="image"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>Invitation e-card video</span>
+              </li>
+              <li class="flex items-start">
+                <i
+                  data-feather="instagram"
+                  class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"
+                ></i
+                ><span>5 cinematic reels</span>
+              </li>
             </ul>
-            <a href="#contact" class="inline-block w-full py-3 lg:py-4 border border-royal-gold/50 text-royal-gold font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-300 text-[10px] lg:text-xs">Request Booking</a>
+            <a
+              href="#contact"
+              class="inline-block w-full py-3 lg:py-4 border border-royal-gold/50 text-royal-gold font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-300 text-[10px] lg:text-xs"
+              >Request Booking</a
+            >
           </div>
         </div>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 lg:py-32 bg-mandala text-royal-dark border-t border-royal-gold/30">
+    <section
+      id="contact"
+      class="py-20 lg:py-32 bg-mandala text-royal-dark border-t border-royal-gold/30"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
           <div class="lg:col-span-2" data-aos="fade-right">
-            <p class="text-royal-maroon font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3">Connect</p>
+            <p
+              class="text-royal-maroon font-cinzel text-xs font-bold tracking-[0.3em] uppercase mb-3"
+            >
+              Connect
+            </p>
             <h2 class="text-3xl md:text-5xl font-bold font-playfair mb-6">
-              Begin Your <br />Royal <span class="italic text-royal-maroon">Journey.</span>
+              Begin Your <br />Royal
+              <span class="italic text-royal-maroon">Journey.</span>
             </h2>
             <div class="w-16 h-1 bg-royal-gold mb-8 lg:mb-10"></div>
-            <p class="text-gray-700 font-light mb-10 lg:mb-12 leading-relaxed text-base lg:text-lg">
-              We are currently accepting limited commissions for the 2025-2026 wedding seasons to ensure the highest quality of artistry. Let's discuss your vision.
+            <p
+              class="text-gray-700 font-light mb-10 lg:mb-12 leading-relaxed text-base lg:text-lg"
+            >
+              We are currently accepting limited commissions for the 2025-2026
+              wedding seasons to ensure the highest quality of artistry. Let's
+              discuss your vision.
             </p>
             <div class="space-y-6 lg:space-y-8">
               <div class="flex items-center group">
-                <div class="w-12 h-12 rounded-full border border-royal-gold/30 flex items-center justify-center mr-4 lg:mr-6 group-hover:bg-royal-gold transition duration-300 flex-shrink-0">
-                  <i data-feather="phone" class="text-royal-maroon group-hover:text-white w-5 h-5 transition duration-300"></i>
+                <div
+                  class="w-12 h-12 rounded-full border border-royal-gold/30 flex items-center justify-center mr-4 lg:mr-6 group-hover:bg-royal-gold transition duration-300 flex-shrink-0"
+                >
+                  <i
+                    data-feather="phone"
+                    class="text-royal-maroon group-hover:text-white w-5 h-5 transition duration-300"
+                  ></i>
                 </div>
                 <div class="flex flex-col">
-                  <h4 class="font-cinzel font-bold text-royal-dark mb-1 text-sm lg:text-base">Call/WhatsApp</h4>
-                  <a href="tel:+916291355763" class="text-gray-600 hover:text-royal-gold font-light transition text-sm lg:text-base">+91 62913 55763</a>
-                  <a href="tel:+917450076182" class="text-gray-600 hover:text-royal-gold font-light transition text-sm lg:text-base">+91 74500 76182</a>
+                  <h4
+                    class="font-cinzel font-bold text-royal-dark mb-1 text-sm lg:text-base"
+                  >
+                    Call/WhatsApp
+                  </h4>
+                  <a
+                    href="tel:+916291355763"
+                    class="text-gray-600 hover:text-royal-gold font-light transition text-sm lg:text-base"
+                    >+91 62913 55763</a
+                  >
+                  <a
+                    href="tel:+917450076182"
+                    class="text-gray-600 hover:text-royal-gold font-light transition text-sm lg:text-base"
+                    >+91 74500 76182</a
+                  >
                 </div>
               </div>
               <div class="flex items-center group">
-                <div class="w-12 h-12 rounded-full border border-royal-gold/30 flex items-center justify-center mr-4 lg:mr-6 group-hover:bg-royal-gold transition duration-300 flex-shrink-0">
-                  <i data-feather="mail" class="text-royal-maroon group-hover:text-white w-5 h-5 transition duration-300"></i>
+                <div
+                  class="w-12 h-12 rounded-full border border-royal-gold/30 flex items-center justify-center mr-4 lg:mr-6 group-hover:bg-royal-gold transition duration-300 flex-shrink-0"
+                >
+                  <i
+                    data-feather="mail"
+                    class="text-royal-maroon group-hover:text-white w-5 h-5 transition duration-300"
+                  ></i>
                 </div>
                 <div class="flex flex-col">
-                  <h4 class="font-cinzel font-bold text-royal-dark mb-1 text-sm lg:text-base">Email</h4>
-                  <a href="mailto:swapnacharonphotography@gmail.com" class="text-gray-600 hover:text-royal-gold font-light transition text-sm lg:text-base break-all">swapnacharonphotography@gmail.com</a>
+                  <h4
+                    class="font-cinzel font-bold text-royal-dark mb-1 text-sm lg:text-base"
+                  >
+                    Email
+                  </h4>
+                  <a
+                    href="mailto:swapnacharonphotography@gmail.com"
+                    class="text-gray-600 hover:text-royal-gold font-light transition text-sm lg:text-base break-all"
+                    >swapnacharonphotography@gmail.com</a
+                  >
                 </div>
               </div>
             </div>
           </div>
 
           <div class="lg:col-span-3" data-aos="fade-left">
-            <div class="bg-white border border-royal-gold/20 p-6 sm:p-8 md:p-12 shadow-2xl">
+            <div
+              class="bg-white border border-royal-gold/20 p-6 sm:p-8 md:p-12 shadow-2xl"
+            >
               <form id="contact-form" class="space-y-6 lg:space-y-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
                   <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Full Name</label>
-                    <input type="text" name="from_name" required class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300" placeholder="E.g. Anjali & Rahul" />
+                    <label
+                      class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2"
+                      >Full Name</label
+                    >
+                    <input
+                      type="text"
+                      name="from_name"
+                      required
+                      class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300"
+                      placeholder="E.g. Anjali & Rahul"
+                    />
                   </div>
                   <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Phone</label>
-                    <input type="tel" name="phone" required class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300" placeholder="+91" />
+                    <label
+                      class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2"
+                      >Phone</label
+                    >
+                    <input
+                      type="tel"
+                      name="phone"
+                      required
+                      class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300"
+                      placeholder="+91"
+                    />
                   </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
                   <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Email</label>
-                    <input type="email" name="reply_to" required class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300" placeholder="your@email.com" />
+                    <label
+                      class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2"
+                      >Email</label
+                    >
+                    <input
+                      type="email"
+                      name="reply_to"
+                      required
+                      class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none placeholder-gray-300"
+                      placeholder="your@email.com"
+                    />
                   </div>
                   <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Interested Package</label>
-                    <select name="package" required class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none cursor-pointer">
-                      <option value="" disabled selected>Select an option...</option>
+                    <label
+                      class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2"
+                      >Interested Package</label
+                    >
+                    <select
+                      name="package"
+                      required
+                      class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none cursor-pointer"
+                    >
+                      <option value="" disabled selected>
+                        Select an option...
+                      </option>
                       <option value="basic">Basic (₹49,999)</option>
-                      <option value="standard">Standard (₹89,999) - Best Seller</option>
-                      <option value="premium">Premium (₹1,19,999) - Luxury</option>
+                      <option value="standard">
+                        Standard (₹89,999) - Best Seller
+                      </option>
+                      <option value="premium">
+                        Premium (₹1,19,999) - Luxury
+                      </option>
                       <option value="custom">Custom Requirement</option>
                     </select>
                   </div>
                 </div>
                 <div>
-                  <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Event Dates & Venue Details</label>
-                  <textarea name="message" rows="3" required class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none resize-none placeholder-gray-300" placeholder="Tell us about your majestic celebration..."></textarea>
+                  <label
+                    class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2"
+                    >Event Dates & Venue Details</label
+                  >
+                  <textarea
+                    name="message"
+                    rows="3"
+                    required
+                    class="w-full bg-transparent border-b border-gray-300 px-0 py-3 text-base md:text-sm text-royal-dark focus:outline-none focus:border-royal-gold transition rounded-none resize-none placeholder-gray-300"
+                    placeholder="Tell us about your majestic celebration..."
+                  ></textarea>
                 </div>
-                <button type="submit" class="mt-6 lg:mt-8 w-full py-4 lg:py-5 bg-royal-dark text-royal-gold text-xs font-bold tracking-widest uppercase hover:bg-royal-maroon hover:text-white transition duration-500 shadow-xl">
+                <button
+                  type="submit"
+                  class="mt-6 lg:mt-8 w-full py-4 lg:py-5 bg-royal-dark text-royal-gold text-xs font-bold tracking-widest uppercase hover:bg-royal-maroon hover:text-white transition duration-500 shadow-xl"
+                >
                   Submit Royal Inquiry
                 </button>
               </form>
@@ -753,70 +1388,195 @@
       </div>
     </section>
 
-    <footer class="bg-royal-dark py-12 border-t border-royal-gold/20 relative overflow-hidden">
-      <div class="absolute -top-32 -left-32 w-64 h-64 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 rounded-full"></div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center relative z-10">
-        <span class="text-2xl font-bold text-royal-gold font-cinzel tracking-widest uppercase mb-6">SWAPNACHARON</span>
+    <footer
+      class="bg-royal-dark py-12 border-t border-royal-gold/20 relative overflow-hidden"
+    >
+      <div
+        class="absolute -top-32 -left-32 w-64 h-64 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 rounded-full"
+      ></div>
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center relative z-10"
+      >
+        <span
+          class="text-2xl font-bold text-royal-gold font-cinzel tracking-widest uppercase mb-6"
+          >SWAPNACHARON</span
+        >
         <div class="flex space-x-6 md:space-x-8 mb-8">
-          <a href="https://www.instagram.com/swapnacharon_photography?igsh=MmVwMDZxaGVqMzI3" class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"><i data-feather="instagram" class="w-5 h-5"></i></a>
-          <a href="https://www.facebook.com/share/1PTTThX1S8/" class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"><i data-feather="facebook" class="w-5 h-5"></i></a>
-          <a href="https://youtube.com/@swapnacharonphotography?si=96PyjmXRCwjlky5q" class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"><i data-feather="youtube" class="w-5 h-5"></i></a>
+          <a
+            href="https://www.instagram.com/swapnacharon_photography?igsh=MmVwMDZxaGVqMzI3"
+            class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"
+            ><i data-feather="instagram" class="w-5 h-5"></i
+          ></a>
+          <a
+            href="https://www.facebook.com/share/1PTTThX1S8/"
+            class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"
+            ><i data-feather="facebook" class="w-5 h-5"></i
+          ></a>
+          <a
+            href="https://youtube.com/@swapnacharonphotography?si=96PyjmXRCwjlky5q"
+            class="text-gray-400 hover:text-royal-gold transition transform hover:scale-110"
+            ><i data-feather="youtube" class="w-5 h-5"></i
+          ></a>
         </div>
         <p class="text-gray-500 text-xs font-light tracking-[0.1em] uppercase">
-          &copy; <script>document.write(new Date().getFullYear())</script> Swapnacharon Photography. Capturing Royal Legacies.
+          &copy;
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+          Swapnacharon Photography. Capturing Royal Legacies.
         </p>
       </div>
     </footer>
 
     <!-- Success Modal -->
-    <div id="success-modal" class="fixed inset-0 z-[1000] hidden items-center justify-center bg-royal-dark/95 backdrop-blur-md px-4">
-      <div class="glass-card p-8 md:p-12 max-w-md w-full mx-auto text-center border border-royal-gold/30 rounded-sm">
-        <div class="w-16 h-16 md:w-20 md:h-20 mx-auto border border-royal-gold rounded-full flex items-center justify-center mb-6">
-          <i data-feather="check" class="text-royal-gold w-6 h-6 md:w-8 md:h-8"></i>
+    <div
+      id="success-modal"
+      class="fixed inset-0 z-[1000] hidden items-center justify-center bg-royal-dark/95 backdrop-blur-md px-4"
+    >
+      <div
+        class="glass-card p-8 md:p-12 max-w-md w-full mx-auto text-center border border-royal-gold/30 rounded-sm"
+      >
+        <div
+          class="w-16 h-16 md:w-20 md:h-20 mx-auto border border-royal-gold rounded-full flex items-center justify-center mb-6"
+        >
+          <i
+            data-feather="check"
+            class="text-royal-gold w-6 h-6 md:w-8 md:h-8"
+          ></i>
         </div>
-        <h3 class="text-2xl md:text-3xl font-playfair font-bold text-white mb-4">Inquiry Received</h3>
-        <p class="text-gray-300 font-light mb-8 md:mb-10 text-sm leading-relaxed">
-          Thank you for considering us to document your royal celebration. We will reach out to you very soon.
+        <h3
+          class="text-2xl md:text-3xl font-playfair font-bold text-white mb-4"
+        >
+          Inquiry Received
+        </h3>
+        <p
+          class="text-gray-300 font-light mb-8 md:mb-10 text-sm leading-relaxed"
+        >
+          Thank you for considering us to document your royal celebration. We
+          will reach out to you very soon.
         </p>
-        <button id="close-success-modal" class="px-8 md:px-10 py-3 md:py-4 bg-royal-gold text-royal-dark text-[10px] md:text-xs font-bold tracking-widest uppercase hover:bg-white transition w-full shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+        <button
+          id="close-success-modal"
+          class="px-8 md:px-10 py-3 md:py-4 bg-royal-gold text-royal-dark text-[10px] md:text-xs font-bold tracking-widest uppercase hover:bg-white transition w-full shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+        >
           Return
         </button>
       </div>
     </div>
 
     <!-- YouTube Video Modal -->
-    <div id="video-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-royal-dark/95 backdrop-blur-md">
-      <button id="close-video-modal" class="absolute top-4 md:top-6 right-4 md:right-6 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none">
-        <svg width="32" height="32" class="md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+    <div
+      id="video-modal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center bg-royal-dark/95 backdrop-blur-md"
+    >
+      <button
+        id="close-video-modal"
+        class="absolute top-4 md:top-6 right-4 md:right-6 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none"
+      >
+        <svg
+          width="32"
+          height="32"
+          class="md:w-10 md:h-10"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
-      <div class="w-full max-w-5xl aspect-video px-2 md:px-4 relative border border-royal-gold/20 p-1 md:p-2 rounded bg-black mt-10 md:mt-0">
-        <iframe id="video-iframe" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div
+        class="w-full max-w-5xl aspect-video px-2 md:px-4 relative border border-royal-gold/20 p-1 md:p-2 rounded bg-black mt-10 md:mt-0"
+      >
+        <iframe
+          id="video-iframe"
+          class="w-full h-full"
+          frameborder="0"
+          allow="
+            accelerometer;
+            autoplay;
+            clipboard-write;
+            encrypted-media;
+            gyroscope;
+            picture-in-picture;
+          "
+          allowfullscreen
+        ></iframe>
       </div>
     </div>
 
     <!-- Image Lightbox Modal -->
-    <div id="image-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-royal-dark/95 backdrop-blur-md">
-      <button id="close-image-modal" class="absolute top-4 right-4 md:top-6 md:right-6 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+    <div
+      id="image-modal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center bg-royal-dark/95 backdrop-blur-md"
+    >
+      <button
+        id="close-image-modal"
+        class="absolute top-4 right-4 md:top-6 md:right-6 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none"
+      >
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
-      <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <button
+        id="lightbox-prev"
+        class="absolute left-4 top-1/2 -translate-y-1/2 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none"
+      >
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
-      <button id="lightbox-next" class="absolute right-16 top-1/2 -translate-y-1/2 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <button
+        id="lightbox-next"
+        class="absolute right-16 top-1/2 -translate-y-1/2 text-royal-ivory hover:text-royal-gold transition z-10 focus:outline-none"
+      >
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </button>
       <div class="w-full max-w-5xl px-4 flex items-center justify-center">
-        <img id="lightbox-img" src="" alt="Portfolio Image" class="max-h-[85vh] max-w-full object-contain border border-royal-gold/20 shadow-2xl" />
+        <img
+          id="lightbox-img"
+          src=""
+          alt="Portfolio Image"
+          class="max-h-[85vh] max-w-full object-contain border border-royal-gold/20 shadow-2xl"
+        />
       </div>
-      <div id="lightbox-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-royal-gold font-cinzel text-xs tracking-widest"></div>
+      <div
+        id="lightbox-counter"
+        class="absolute bottom-6 left-1/2 -translate-x-1/2 text-royal-gold font-cinzel text-xs tracking-widest"
+      ></div>
     </div>
 
     <!-- DYNAMIC ENGINE SCRIPT -->
@@ -830,17 +1590,70 @@
         { Category: "Hero", ImageLink: "1_X07rFVuU71M2upvAbTgXoTu_AD-Xlvq" },
         { Category: "Hero", ImageLink: "1CHHq8obgA2aZLyTApuqdVa7j0FT_PM-g" },
         { Category: "Hero", ImageLink: "1R23myvg5JjDGUX1vo5EuEFlZj1ZcM0Lr" },
-        { Category: "Portfolio", ImageLink: "1wRULaGuq0VKVGacJhLKN6pGM1Jmwckd5", RedirectLink: "" },
-        { Category: "Portfolio", ImageLink: "1ixXL_2i-bqgJzjNDALTMQjNhAag108Vw", RedirectLink: "" },
-        { Category: "Portfolio", ImageLink: "1iSTxlVH9q9H8ti7O47GcNvQKbc_2P5Nv", RedirectLink: "" },
-        { Category: "Portfolio", ImageLink: "1rRN185GcPtdce3gzeiA5gDlFdpkUKcKb", RedirectLink: "" },
-        { Category: "Portfolio", ImageLink: "1NSkfEDZ6bp034GafSyfNCv-dt-7KOUY-", RedirectLink: "" },
-        { Category: "Portfolio", ImageLink: "1_X07rFVuU71M2upvAbTgXoTu_AD-Xlvq", RedirectLink: "" },
-        { Category: "Portfolio", ImageLink: "1CHHq8obgA2aZLyTApuqdVa7j0FT_PM-g", RedirectLink: "" },
-        { Category: "Portfolio", ImageLink: "1R23myvg5JjDGUX1vo5EuEFlZj1ZcM0Lr", RedirectLink: "" },
-        { Category: "Story", ImageLink: "1ixXL_2i-bqgJzjNDALTMQjNhAag108Vw", Tag: "Kolkata, India", Title: "Rahul & Priya's Wedding", Subtitle: "A beautiful exploration of traditional Bengali rituals.", RedirectLink: "#contact" },
-        { Category: "Story", ImageLink: "1iSTxlVH9q9H8ti7O47GcNvQKbc_2P5Nv", Tag: "Destination / Goa", Title: "A Beach Pre-Wedding", Subtitle: "Sunsets, ocean waves, and pure romance.", RedirectLink: "#contact" },
-        { Category: "Story", ImageLink: "1rRN185GcPtdce3gzeiA5gDlFdpkUKcKb", Tag: "Howrah, India", Title: "A Grand Reception", Subtitle: "Elegance, dazzling lights, and majestic aesthetics.", RedirectLink: "#contact" },
+        {
+          Category: "Portfolio",
+          ImageLink: "1wRULaGuq0VKVGacJhLKN6pGM1Jmwckd5",
+          RedirectLink: "",
+        },
+        {
+          Category: "Portfolio",
+          ImageLink: "1ixXL_2i-bqgJzjNDALTMQjNhAag108Vw",
+          RedirectLink: "",
+        },
+        {
+          Category: "Portfolio",
+          ImageLink: "1iSTxlVH9q9H8ti7O47GcNvQKbc_2P5Nv",
+          RedirectLink: "",
+        },
+        {
+          Category: "Portfolio",
+          ImageLink: "1rRN185GcPtdce3gzeiA5gDlFdpkUKcKb",
+          RedirectLink: "",
+        },
+        {
+          Category: "Portfolio",
+          ImageLink: "1NSkfEDZ6bp034GafSyfNCv-dt-7KOUY-",
+          RedirectLink: "",
+        },
+        {
+          Category: "Portfolio",
+          ImageLink: "1_X07rFVuU71M2upvAbTgXoTu_AD-Xlvq",
+          RedirectLink: "",
+        },
+        {
+          Category: "Portfolio",
+          ImageLink: "1CHHq8obgA2aZLyTApuqdVa7j0FT_PM-g",
+          RedirectLink: "",
+        },
+        {
+          Category: "Portfolio",
+          ImageLink: "1R23myvg5JjDGUX1vo5EuEFlZj1ZcM0Lr",
+          RedirectLink: "",
+        },
+        {
+          Category: "Story",
+          ImageLink: "1ixXL_2i-bqgJzjNDALTMQjNhAag108Vw",
+          Tag: "Kolkata, India",
+          Title: "Rahul & Priya's Wedding",
+          Subtitle: "A beautiful exploration of traditional Bengali rituals.",
+          RedirectLink: "#contact",
+        },
+        {
+          Category: "Story",
+          ImageLink: "1iSTxlVH9q9H8ti7O47GcNvQKbc_2P5Nv",
+          Tag: "Destination / Goa",
+          Title: "A Beach Pre-Wedding",
+          Subtitle: "Sunsets, ocean waves, and pure romance.",
+          RedirectLink: "#contact",
+        },
+        {
+          Category: "Story",
+          ImageLink: "1rRN185GcPtdce3gzeiA5gDlFdpkUKcKb",
+          Tag: "Howrah, India",
+          Title: "A Grand Reception",
+          Subtitle: "Elegance, dazzling lights, and majestic aesthetics.",
+          RedirectLink: "#contact",
+        },
         { Category: "Video", ImageLink: "lrQhh7CMFyg" },
         { Category: "Video", ImageLink: "a1B6_p9IycM" },
         { Category: "Video", ImageLink: "ec7vUWQIhg0" },
@@ -849,7 +1662,8 @@
 
       function getImageUrl(url) {
         if (!url) return "";
-        if (url.includes("thumbnail") || url.match(/\.(jpeg|jpg|gif|png)$/i)) return url;
+        if (url.includes("thumbnail") || url.match(/\.(jpeg|jpg|gif|png)$/i))
+          return url;
         const match = url.match(/\/d\/(.*?)\/|id=([^&]+)/);
         const id = match ? match[1] || match[2] : url.trim();
         if (id && !id.includes("/")) {
@@ -868,8 +1682,10 @@
 
       function openLightbox(index) {
         lightboxIndex = index;
-        document.getElementById("lightbox-img").src = lightboxImages[lightboxIndex];
-        document.getElementById("lightbox-counter").textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+        document.getElementById("lightbox-img").src =
+          lightboxImages[lightboxIndex];
+        document.getElementById("lightbox-counter").textContent =
+          `${lightboxIndex + 1} / ${lightboxImages.length}`;
         const modal = document.getElementById("image-modal");
         modal.classList.remove("hidden");
         modal.classList.add("flex");
@@ -887,26 +1703,42 @@
       function renderHero(items) {
         if (!items.length) return;
         let images = items.map((item) => getImageUrl(item.ImageLink));
-        while (images.length < 5) { images = images.concat(images); }
+        while (images.length < 5) {
+          images = images.concat(images);
+        }
 
         const genRow = (imgs, dir) => {
-          const innerHtml = imgs.map((img) => `<img src="${img}" class="marquee-img opacity-70 pointer-events-none select-none transform-gpu will-change-transform" draggable="false" alt="Gallery Image" />`).join("");
+          const innerHtml = imgs
+            .map(
+              (img) =>
+                `<img src="${img}" class="marquee-img opacity-70 pointer-events-none select-none transform-gpu will-change-transform" draggable="false" alt="Gallery Image" />`,
+            )
+            .join("");
           return `<div class="hero-marquee-row ${dir}"><div class="flex">${innerHtml}</div><div class="flex">${innerHtml}</div></div>`;
         };
 
         document.getElementById("dynamic-hero-marquee").innerHTML =
           genRow(images.slice(0, 5), "marquee-left") +
           genRow(images.slice().reverse().slice(0, 5), "marquee-right") +
-          genRow(images.slice(0, 5).sort(() => 0.5 - Math.random()), "marquee-left");
+          genRow(
+            images.slice(0, 5).sort(() => 0.5 - Math.random()),
+            "marquee-left",
+          );
       }
 
       function renderPortfolio(items, append = false) {
-        const html = items.map((item, index) => {
-          const globalIndex = append ? (currentPortfolioCount - items.length + index) : index;
-          const hasLink = item.RedirectLink && item.RedirectLink.trim() !== "" && item.RedirectLink.trim() !== "#";
+        const html = items
+          .map((item, index) => {
+            const globalIndex = append
+              ? currentPortfolioCount - items.length + index
+              : index;
+            const hasLink =
+              item.RedirectLink &&
+              item.RedirectLink.trim() !== "" &&
+              item.RedirectLink.trim() !== "#";
 
-          if (hasLink) {
-            return `
+            if (hasLink) {
+              return `
               <a href="${item.RedirectLink}" target="_blank" class="group relative aspect-square overflow-hidden block border border-royal-gold/10 transform-gpu">
                 <img src="${getImageUrl(item.ImageLink)}" loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter sepia-[0.1] transform-gpu will-change-transform" alt="Portfolio Image">
                 <div class="absolute inset-0 bg-gradient-to-t from-royal-maroon/80 to-royal-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
@@ -915,8 +1747,8 @@
                   </div>
                 </div>
               </a>`;
-          } else {
-            return `
+            } else {
+              return `
               <div data-index="${globalIndex}" class="lightbox-trigger group relative aspect-square overflow-hidden block border border-royal-gold/10 transform-gpu cursor-pointer">
                 <img src="${getImageUrl(item.ImageLink)}" loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter sepia-[0.1] transform-gpu will-change-transform" alt="Portfolio Image">
                 <div class="absolute inset-0 bg-gradient-to-t from-royal-maroon/80 to-royal-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
@@ -925,8 +1757,9 @@
                   </div>
                 </div>
               </div>`;
-          }
-        }).join("");
+            }
+          })
+          .join("");
 
         const container = document.getElementById("dynamic-portfolio");
         if (append) {
@@ -938,14 +1771,20 @@
         feather.replace();
 
         // Update lightbox images array from all portfolio items
-        lightboxImages = globalPortfolioItems.map((item) => getImageUrl(item.ImageLink));
+        lightboxImages = globalPortfolioItems.map((item) =>
+          getImageUrl(item.ImageLink),
+        );
 
         // Attach click handlers to lightbox triggers
         document.querySelectorAll(".lightbox-trigger").forEach((el) => {
-          el.addEventListener("click", () => openLightbox(parseInt(el.dataset.index)));
+          el.addEventListener("click", () =>
+            openLightbox(parseInt(el.dataset.index)),
+          );
         });
 
-        const btnContainer = document.getElementById("portfolio-load-more-container");
+        const btnContainer = document.getElementById(
+          "portfolio-load-more-container",
+        );
         if (currentPortfolioCount < globalPortfolioItems.length) {
           btnContainer.classList.remove("hidden");
         } else {
@@ -954,17 +1793,18 @@
       }
 
       function renderStories(items) {
-        document.getElementById("dynamic-stories").innerHTML = items.map((item, i) => {
-          let title = item.Title || "A Timeless Tale";
-          let words = title.trim().split(" ");
-          let highlightedTitle = title;
-          if (words.length > 1) {
-            let lastWord = words.pop();
-            highlightedTitle = `${words.join(" ")} <span class="text-royal-gold italic">${lastWord}</span>`;
-          } else {
-            highlightedTitle = `<span class="text-royal-gold italic">${title}</span>`;
-          }
-          return `
+        document.getElementById("dynamic-stories").innerHTML = items
+          .map((item, i) => {
+            let title = item.Title || "A Timeless Tale";
+            let words = title.trim().split(" ");
+            let highlightedTitle = title;
+            if (words.length > 1) {
+              let lastWord = words.pop();
+              highlightedTitle = `${words.join(" ")} <span class="text-royal-gold italic">${lastWord}</span>`;
+            } else {
+              highlightedTitle = `<span class="text-royal-gold italic">${title}</span>`;
+            }
+            return `
             <a href="${item.RedirectLink || "#contact"}" class="group block bg-white border border-royal-gold/20 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative transform-gpu" data-aos="fade-up" data-aos-delay="${(i % 3) * 100}">
               <div class="overflow-hidden aspect-[4/3] relative">
                 <img src="${getImageUrl(item.ImageLink)}" loading="lazy" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105 filter sepia-[0.1] transform-gpu will-change-transform" alt="${item.Title}">
@@ -976,19 +1816,24 @@
                 </div>
               </div>
             </a>`;
-        }).join("");
+          })
+          .join("");
       }
 
       function renderVideos(items) {
         if (!items.length) return;
         let vids = items;
-        while (vids.length < 8) { vids = vids.concat(items); }
+        while (vids.length < 8) {
+          vids = vids.concat(items);
+        }
 
-        const trackHtml = vids.map((item) => {
-          let ytId = item.ImageLink;
-          if (ytId.includes("v=")) ytId = ytId.split("v=")[1].split("&")[0];
-          else if (ytId.includes("youtu.be/")) ytId = ytId.split("youtu.be/")[1].split("?")[0];
-          return `
+        const trackHtml = vids
+          .map((item) => {
+            let ytId = item.ImageLink;
+            if (ytId.includes("v=")) ytId = ytId.split("v=")[1].split("&")[0];
+            else if (ytId.includes("youtu.be/"))
+              ytId = ytId.split("youtu.be/")[1].split("?")[0];
+            return `
             <a href="#" data-video-id="${ytId}" class="open-video relative video-thumb-container group/vid block overflow-hidden border border-royal-gold/30 transform-gpu">
               <img src="https://img.youtube.com/vi/${ytId}/maxresdefault.jpg" loading="lazy" class="w-full h-full object-cover transition duration-1000 group-hover/vid:scale-105 filter sepia-[0.2] transform-gpu will-change-transform" alt="Video Thumbnail">
               <div class="absolute inset-0 bg-royal-dark/30 group-hover/vid:bg-royal-dark/50 transition duration-500 flex items-center justify-center">
@@ -997,45 +1842,124 @@
                 </div>
               </div>
             </a>`;
-        }).join("");
+          })
+          .join("");
 
-        document.getElementById("dynamic-videos").innerHTML = trackHtml + trackHtml;
+        document.getElementById("dynamic-videos").innerHTML =
+          trackHtml + trackHtml;
       }
 
       function initDynamicContent() {
+        // Inject skeleton loaders immediately
+        const portfolioSkeletons = Array(8)
+          .fill("")
+          .map(
+            () => `
+    <div class="skeleton aspect-square border border-royal-gold/10"></div>
+  `,
+          )
+          .join("");
+        document.getElementById("dynamic-portfolio").innerHTML =
+          portfolioSkeletons;
+
+        const storySkeletons = Array(3)
+          .fill("")
+          .map(
+            () => `
+    <div class="skeleton-ivory border border-royal-gold/20 shadow-xl">
+      <div class="aspect-[4/3] skeleton-ivory"></div>
+      <div class="p-6 space-y-3">
+        <div class="skeleton-ivory h-3 w-1/3 rounded"></div>
+        <div class="skeleton-ivory h-5 w-3/4 rounded"></div>
+        <div class="skeleton-ivory h-3 w-full rounded"></div>
+      </div>
+    </div>
+  `,
+          )
+          .join("");
+        document.getElementById("dynamic-stories").innerHTML = storySkeletons;
+
+        const videoSkeletons = Array(6)
+          .fill("")
+          .map(
+            () => `
+    <div class="skeleton video-thumb-container border border-royal-gold/30"></div>
+  `,
+          )
+          .join("");
+        document.getElementById("dynamic-videos").innerHTML = videoSkeletons;
+
+        // Now fetch real data
         if (!GOOGLE_SHEET_CSV_URL || GOOGLE_SHEET_CSV_URL === "") {
           processData(defaultData);
         } else {
           Papa.parse(GOOGLE_SHEET_CSV_URL, {
             download: true,
             header: true,
-            complete: function (results) { processData(results.data); },
-            error: function () { processData(defaultData); },
+            complete: function (results) {
+              processData(results.data);
+            },
+            error: function () {
+              processData(defaultData);
+            },
           });
         }
       }
 
       function processData(data) {
-        let heroItems = data.filter((d) => d.Category && d.Category.toLowerCase().includes("hero"));
-        let portfolioItems = data.filter((d) => d.Category && d.Category.toLowerCase().includes("portfolio"));
-        let videoItems = data.filter((d) => d.Category && d.Category.toLowerCase().includes("video"));
-        let storyItems = data.filter((d) => d.Category && d.Category.toLowerCase().includes("story"));
+        let heroItems = data.filter(
+          (d) => d.Category && d.Category.toLowerCase().includes("hero"),
+        );
+        let portfolioItems = data.filter(
+          (d) => d.Category && d.Category.toLowerCase().includes("portfolio"),
+        );
+        let videoItems = data.filter(
+          (d) => d.Category && d.Category.toLowerCase().includes("video"),
+        );
+        let storyItems = data.filter(
+          (d) => d.Category && d.Category.toLowerCase().includes("story"),
+        );
 
-        if (heroItems.length === 0 && portfolioItems.length === 0 && videoItems.length === 0 && storyItems.length === 0) {
-          heroItems = defaultData.filter((d) => d.Category.toLowerCase().includes("hero"));
-          portfolioItems = defaultData.filter((d) => d.Category.toLowerCase().includes("portfolio"));
-          videoItems = defaultData.filter((d) => d.Category.toLowerCase().includes("video"));
-          storyItems = defaultData.filter((d) => d.Category.toLowerCase().includes("story"));
+        if (
+          heroItems.length === 0 &&
+          portfolioItems.length === 0 &&
+          videoItems.length === 0 &&
+          storyItems.length === 0
+        ) {
+          heroItems = defaultData.filter((d) =>
+            d.Category.toLowerCase().includes("hero"),
+          );
+          portfolioItems = defaultData.filter((d) =>
+            d.Category.toLowerCase().includes("portfolio"),
+          );
+          videoItems = defaultData.filter((d) =>
+            d.Category.toLowerCase().includes("video"),
+          );
+          storyItems = defaultData.filter((d) =>
+            d.Category.toLowerCase().includes("story"),
+          );
         }
-        if (videoItems.length === 0) videoItems = defaultData.filter((d) => d.Category.toLowerCase().includes("video"));
-        if (storyItems.length === 0) storyItems = defaultData.filter((d) => d.Category.toLowerCase().includes("story"));
+        if (videoItems.length === 0)
+          videoItems = defaultData.filter((d) =>
+            d.Category.toLowerCase().includes("video"),
+          );
+        if (storyItems.length === 0)
+          storyItems = defaultData.filter((d) =>
+            d.Category.toLowerCase().includes("story"),
+          );
 
         if (heroItems.length) renderHero(heroItems);
 
         if (portfolioItems.length) {
           globalPortfolioItems = portfolioItems;
-          currentPortfolioCount = Math.min(PORTFOLIO_ITEMS_PER_PAGE, globalPortfolioItems.length);
-          renderPortfolio(globalPortfolioItems.slice(0, currentPortfolioCount), false);
+          currentPortfolioCount = Math.min(
+            PORTFOLIO_ITEMS_PER_PAGE,
+            globalPortfolioItems.length,
+          );
+          renderPortfolio(
+            globalPortfolioItems.slice(0, currentPortfolioCount),
+            false,
+          );
         }
 
         if (storyItems.length) renderStories(storyItems.slice(0, 6));
@@ -1043,11 +1967,19 @@
 
         const preloader = document.getElementById("preloader");
         if (preloader) {
-          const heroImgs = Array.from(document.querySelectorAll("#dynamic-hero-marquee img")).slice(0, 3);
-          const loadPromises = heroImgs.map((img) => new Promise((resolve) => {
-            if (img.complete) resolve();
-            else { img.onload = resolve; img.onerror = resolve; }
-          }));
+          const heroImgs = Array.from(
+            document.querySelectorAll("#dynamic-hero-marquee img"),
+          ).slice(0, 3);
+          const loadPromises = heroImgs.map(
+            (img) =>
+              new Promise((resolve) => {
+                if (img.complete) resolve();
+                else {
+                  img.onload = resolve;
+                  img.onerror = resolve;
+                }
+              }),
+          );
           Promise.race([
             Promise.all(loadPromises),
             new Promise((res) => setTimeout(res, 3500)),
@@ -1095,15 +2027,26 @@
       const loadMoreBtn = document.getElementById("portfolio-load-more-btn");
       if (loadMoreBtn) {
         loadMoreBtn.addEventListener("click", () => {
-          const nextCount = Math.min(currentPortfolioCount + PORTFOLIO_ITEMS_PER_PAGE, globalPortfolioItems.length);
-          const nextItems = globalPortfolioItems.slice(currentPortfolioCount, nextCount);
+          const nextCount = Math.min(
+            currentPortfolioCount + PORTFOLIO_ITEMS_PER_PAGE,
+            globalPortfolioItems.length,
+          );
+          const nextItems = globalPortfolioItems.slice(
+            currentPortfolioCount,
+            nextCount,
+          );
           currentPortfolioCount = nextCount;
           renderPortfolio(nextItems, true);
         });
       }
 
       // UI / INTERACTION SCRIPTS
-      AOS.init({ duration: 1000, easing: "ease-out-cubic", once: true, offset: 50 });
+      AOS.init({
+        duration: 1000,
+        easing: "ease-out-cubic",
+        once: true,
+        offset: 50,
+      });
       feather.replace();
 
       const btn = document.getElementById("mobile-menu-button");
@@ -1138,23 +2081,34 @@
       window.addEventListener("scroll", () => {
         if (window.scrollY > 50) {
           mainNav.classList.replace("bg-royal-dark/80", "bg-royal-dark/95");
-          mainNav.classList.replace("border-royal-gold/20", "border-royal-gold/50");
+          mainNav.classList.replace(
+            "border-royal-gold/20",
+            "border-royal-gold/50",
+          );
           mainNav.classList.add("shadow-xl");
         } else {
           mainNav.classList.replace("bg-royal-dark/95", "bg-royal-dark/80");
-          mainNav.classList.replace("border-royal-gold/50", "border-royal-gold/20");
+          mainNav.classList.replace(
+            "border-royal-gold/50",
+            "border-royal-gold/20",
+          );
           mainNav.classList.remove("shadow-xl");
         }
       });
 
-      const observerOptions = { root: null, rootMargin: "-20% 0px -70% 0px", threshold: 0 };
+      const observerOptions = {
+        root: null,
+        rootMargin: "-20% 0px -70% 0px",
+        threshold: 0,
+      };
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const currentId = entry.target.getAttribute("id");
             navLinks.forEach((link) => {
               link.classList.remove("active-nav");
-              if (link.getAttribute("href") === `#${currentId}`) link.classList.add("active-nav");
+              if (link.getAttribute("href") === `#${currentId}`)
+                link.classList.add("active-nav");
             });
           }
         });
@@ -1172,7 +2126,8 @@
         submitBtn.textContent = "Sending...";
         submitBtn.disabled = true;
 
-        emailjs.sendForm("service_ya9dj4g", "template_b0xj12z", form)
+        emailjs
+          .sendForm("service_ya9dj4g", "template_b0xj12z", form)
           .then(() => {
             formModal.classList.remove("hidden");
             formModal.classList.add("flex");
@@ -1189,11 +2144,13 @@
           });
       });
 
-      document.getElementById("close-success-modal").addEventListener("click", () => {
-        formModal.classList.add("hidden");
-        formModal.classList.remove("flex");
-        lenis.start();
-      });
+      document
+        .getElementById("close-success-modal")
+        .addEventListener("click", () => {
+          formModal.classList.add("hidden");
+          formModal.classList.remove("flex");
+          lenis.start();
+        });
 
       // Video Modal
       const videoModal = document.getElementById("video-modal");
@@ -1221,22 +2178,30 @@
       });
 
       // Image Lightbox
-      document.getElementById("close-image-modal").addEventListener("click", closeLightbox);
+      document
+        .getElementById("close-image-modal")
+        .addEventListener("click", closeLightbox);
 
       document.getElementById("lightbox-prev").addEventListener("click", () => {
-        lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
-        document.getElementById("lightbox-img").src = lightboxImages[lightboxIndex];
-        document.getElementById("lightbox-counter").textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+        lightboxIndex =
+          (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+        document.getElementById("lightbox-img").src =
+          lightboxImages[lightboxIndex];
+        document.getElementById("lightbox-counter").textContent =
+          `${lightboxIndex + 1} / ${lightboxImages.length}`;
       });
 
       document.getElementById("lightbox-next").addEventListener("click", () => {
         lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
-        document.getElementById("lightbox-img").src = lightboxImages[lightboxIndex];
-        document.getElementById("lightbox-counter").textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+        document.getElementById("lightbox-img").src =
+          lightboxImages[lightboxIndex];
+        document.getElementById("lightbox-counter").textContent =
+          `${lightboxIndex + 1} / ${lightboxImages.length}`;
       });
 
       document.getElementById("image-modal").addEventListener("click", (e) => {
-        if (e.target === document.getElementById("image-modal")) closeLightbox();
+        if (e.target === document.getElementById("image-modal"))
+          closeLightbox();
       });
 
       document.addEventListener("keydown", (e) => {
@@ -1244,8 +2209,10 @@
           closeLightbox();
           closeVideoModal.click();
         }
-        if (e.key === "ArrowLeft") document.getElementById("lightbox-prev").click();
-        if (e.key === "ArrowRight") document.getElementById("lightbox-next").click();
+        if (e.key === "ArrowLeft")
+          document.getElementById("lightbox-prev").click();
+        if (e.key === "ArrowRight")
+          document.getElementById("lightbox-next").click();
       });
     </script>
   </body>
