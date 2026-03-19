@@ -77,10 +77,6 @@
 
       .bg-mandala {
         background-color: #fdfbf7;
-        background-image: radial-gradient(#d4af37 0.5px, transparent 0.5px), radial-gradient(#d4af37 0.5px, #fdfbf7 0.5px);
-        background-size: 40px 40px;
-        background-position: 0 0, 20px 20px;
-        /* Removed background-attachment: fixed to eliminate scroll repainting lag */
         position: relative;
       }
       /* Removed the max-width media query since we eliminated the fixed attachment entirely */
@@ -485,8 +481,8 @@
           <div class="lg:w-1/2 relative w-full" data-aos="fade-right" data-aos-duration="1200">
             <div class="absolute -inset-4 border border-royal-gold/40 transform translate-x-4 translate-y-4 hidden md:block"></div>
             <div class="relative p-3 md:p-4 bg-white/50 backdrop-blur-sm border border-royal-gold/20 shadow-xl">
-              <img src="public/images/client.jpg" alt="Dip Das - Photographer" loading="lazy"
-                class="w-full h-auto max-h-[420px] md:max-h-[500px] lg:max-h-[700px] object-cover object-top filter sepia-[0.1]" />
+             <img src="public/images/client.jpg" alt="Dip Das - Photographer" loading="eager"
+  class="w-full h-auto object-contain object-top filter sepia-[0.1]" />
             </div>
           </div>
           <div class="lg:w-1/2 w-full" data-aos="fade-left" data-aos-duration="1200">
@@ -870,7 +866,7 @@
 
         function genRow(imgs, dir) {
           var inner = imgs.map(function(img) {
-            return '<img src="' + img + '" class="marquee-img opacity-70 pointer-events-none select-none" draggable="false" alt="Gallery Image" />';
+            return '<img src="' + img + '" fetchpriority="high" loading="eager" class="marquee-img opacity-70 pointer-events-none select-none" draggable="false" alt="Gallery Image" />';
           }).join("");
           return '<div class="hero-marquee-row ' + dir + '"><div class="flex">' + inner + '</div><div class="flex">' + inner + '</div></div>';
         }
