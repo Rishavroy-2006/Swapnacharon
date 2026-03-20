@@ -19,8 +19,11 @@
     <meta name="twitter:title" content="Swapnacharon Photography | Royal Wedding Films & Photography" />
     <meta name="twitter:description" content="Cinematic wedding films & photography by Dip Das. Capturing timeless royal moments." />
     <meta name="twitter:image" content="https://swapnacharon.netlify.app/public/images/OG.jpg?v=2" />
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+    <link rel="icon" type="image/png" href="public/images/Logo.png" />
 
+    <link rel="preload" as="image" href="public/images/client.jpg" />
+
+    <!-- Tailwind is kept synchronous to prevent Flash of Unstyled Content (FOUC) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -319,9 +322,6 @@
       /* Nav offset for anchor links */
       section { scroll-margin-top: 65px; }
     </style>
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">emailjs.init({ publicKey: "4iIQ-wunEKjnkLhkj" });</script>
   </head>
   <body class="antialiased">
 
@@ -467,11 +467,7 @@
         </div>
       </div>
 
-      <!-- Scroll indicator -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-80">
-        <span class="text-royal-gold text-[10px] tracking-widest uppercase mb-2">Scroll</span>
-        <div class="w-px h-10 bg-gradient-to-b from-royal-gold to-transparent"></div>
-      </div>
+     
     </section>
 
     <!-- About -->
@@ -494,15 +490,20 @@
               Hello, I'm <br/><span class="italic text-royal-maroon">Dip Das</span>
             </h2>
             <p class="text-gray-700 mb-5 font-light leading-relaxed text-sm md:text-base lg:text-lg">
-              Based in Howrah, West Bengal, I am the lead photographer and videographer behind <strong>Swapnacharon</strong>. With over 2 years of dedicated professional experience, my passion lies in capturing authentic moments that tell compelling, beautiful stories.
+              Based in Howrah, West Bengal, I am the lead photographer and videographer behind <strong>Swapnacharon</strong>. With over 5 years of dedicated professional experience, my passion lies in capturing authentic moments that tell compelling, beautiful stories.
             </p>
             <p class="text-gray-700 mb-8 lg:mb-10 font-light leading-relaxed text-sm md:text-base lg:text-lg">
-              My approach blends technical expertise with a creative, artistic vision. Whether it's a traditional Bengali wedding, an intimate portrait session, or a commercial project, my goal is to deliver exceptional, timeless imagery that resonates emotionally.
+              Swapnacharon is not just one person — it's a tight-knit team of 
+experienced photographers, videographers, and editors united by 
+one goal: telling your story beautifully. With dedicated 
+professionals handling every aspect of coverage simultaneously, 
+nothing gets missed and nothing gets rushed. Just honest, 
+cinematic work delivered with care.
             </p>
             <div class="grid grid-cols-2 gap-y-5 gap-x-6 border-t border-royal-gold/30 pt-6">
               <div><h4 class="text-royal-maroon font-cinzel font-bold mb-1 text-sm">Based In</h4><p class="text-gray-600 text-xs md:text-sm font-light">Howrah, West Bengal</p></div>
               <div><h4 class="text-royal-maroon font-cinzel font-bold mb-1 text-sm">Availability</h4><p class="text-gray-600 text-xs md:text-sm font-light">Nationwide</p></div>
-              <div><h4 class="text-royal-maroon font-cinzel font-bold mb-1 text-sm">Experience</h4><p class="text-gray-600 text-xs md:text-sm font-light">2+ Years Professional</p></div>
+              <div><h4 class="text-royal-maroon font-cinzel font-bold mb-1 text-sm">Experience</h4><p class="text-gray-600 text-xs md:text-sm font-light">5+ Years Professional</p></div>
               <div><h4 class="text-royal-maroon font-cinzel font-bold mb-1 text-sm">Bookings</h4><p class="text-gray-600 text-xs md:text-sm font-light">Open</p></div>
             </div>
           </div>
@@ -590,6 +591,7 @@
               <li class="flex items-start"><i data-feather="check-circle" class="w-4 h-4 text-royal-gold mr-3 mt-0.5 flex-shrink-0"></i><span>Trailer video (3m 30s+)</span></li>
             </ul>
             <a href="#contact" class="inline-block w-full py-4 border border-royal-gold/50 text-royal-gold font-bold tracking-widest uppercase hover:bg-royal-gold hover:text-royal-dark transition duration-300 text-xs">Inquire Now</a>
+
           </div>
 
           <!-- Standard -->
@@ -633,6 +635,26 @@
           </div>
 
         </div>
+
+        <!-- "Also Available" / Custom Packages -->
+        <div class="mt-16 lg:mt-24 pt-12 lg:pt-16 border-t border-royal-gold/20 text-center" data-aos="fade-up">
+          <p class="text-royal-gold font-cinzel text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase mb-4">Also Available</p>
+          <h3 class="text-2xl md:text-3xl font-playfair font-bold text-white mb-6">Custom packages crafted to fit your vision and budget</h3>
+          
+          <div class="flex flex-wrap justify-center items-center gap-3 text-gray-300 font-light text-xs md:text-sm lg:text-base max-w-4xl mx-auto mb-8 leading-relaxed">
+            <span>Birthdays</span> <span class="text-royal-gold/50">&bull;</span>
+            <span>Anniversaries</span> <span class="text-royal-gold/50">&bull;</span>
+            <span>Engagements</span> <span class="text-royal-gold/50">&bull;</span>
+            <span>Non-Bengali Weddings</span> <span class="text-royal-gold/50">&bull;</span>
+            <span>Promotional Videos</span> <span class="text-royal-gold/50">&bull;</span>
+            <span>Corporate Events</span>
+          </div>
+
+          <a href="#contact" class="inline-flex items-center text-royal-gold font-bold tracking-widest uppercase hover:text-royal-goldLight transition duration-300 text-xs md:text-sm border-b border-royal-gold hover:border-royal-goldLight pb-1">
+            Get a Custom Quote <i data-feather="arrow-right" class="w-4 h-4 ml-2"></i>
+          </a>
+        </div>
+
       </div>
     </section>
 
@@ -671,6 +693,9 @@
           <div class="lg:col-span-3" data-aos="fade-left">
             <div class="bg-white border border-royal-gold/20 p-5 sm:p-8 md:p-12 shadow-2xl">
               <form id="contact-form" class="space-y-5 lg:space-y-8">
+                <input type="hidden" name="access_key" value="ffee4872-34b3-4118-b46f-79a8db3e9ff9" />
+                <input type="hidden" name="subject" value="New Booking Inquiry — Swapnacharon Photography" />
+                <input type="hidden" name="from_name" value="Swapnacharon Website" />
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-8">
                   <div>
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-royal-maroon mb-2">Full Name</label>
@@ -1115,27 +1140,36 @@
       var submitBtn = form.querySelector('button[type="submit"]');
 
       form.addEventListener("submit", function(e) {
-        e.preventDefault();
-        var originalText = submitBtn.textContent;
-        submitBtn.textContent = "Sending...";
-        submitBtn.disabled = true;
+  e.preventDefault();
+  var originalText = submitBtn.textContent;
+  submitBtn.textContent = "Sending...";
+  submitBtn.disabled = true;
 
-        emailjs.sendForm("service_ya9dj4g", "template_b0xj12z", form)
-          .then(function() {
-            formModal.classList.remove("hidden");
-            formModal.classList.add("flex");
-            lockScroll();
-            form.reset();
-          })
-          .catch(function(error) {
-            alert("Something went wrong. Please call or WhatsApp us directly.");
-            console.error("EmailJS error:", error);
-          })
-          .finally(function() {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-          });
-      });
+  var formData = new FormData(form);
+
+  fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    body: formData
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (data.success) {
+      formModal.classList.remove("hidden");
+      formModal.classList.add("flex");
+      lockScroll();
+      form.reset();
+    } else {
+      alert("Something went wrong. Please call or WhatsApp us directly.");
+    }
+  })
+  .catch(function() {
+    alert("Something went wrong. Please call or WhatsApp us directly.");
+  })
+  .finally(function() {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  });
+});
 
       document.getElementById("close-success-modal").addEventListener("click", function() {
         formModal.classList.add("hidden");
